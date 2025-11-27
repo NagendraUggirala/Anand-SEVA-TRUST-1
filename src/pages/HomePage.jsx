@@ -81,6 +81,12 @@ const HomePage = () => {
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(null);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [donationAmount, setDonationAmount] = useState("500");
+  
+  // Donation progress state
+  const [raised, setRaised] = useState(25000);
+  const [goal, setGoal] = useState(30000);
+  const progress = (raised / goal) * 100;
 
   const testimonials = [
     {
@@ -104,6 +110,13 @@ const HomePage = () => {
         "The systematic approach and genuine care shown by Anand Seva Trust sets them apart.",
       avatar: "AP",
     },
+    {
+      name: "Sanjay Kumar",
+      role: "Donor",
+      content:
+        "Transparent operations and visible impact make Anand Seva Trust my preferred charity for donations.",
+      avatar: "SK",
+    },
   ];
 
   useEffect(() => {
@@ -111,7 +124,7 @@ const HomePage = () => {
       setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [testimonials.length]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -172,13 +185,13 @@ const HomePage = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button
-  size="lg"
-  onClick={() => navigate("/contact")}
-  className="bg-white text-blue-600 hover:bg-blue-50 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-lg flex items-center justify-center"
->
-  Get Help Today <ArrowRight className="ml-2 h-5 w-5" />
-</Button>
+                <Button
+                  size="lg"
+                  onClick={() => navigate("/contact")}
+                  className="bg-white text-blue-600 hover:bg-blue-50 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-lg flex items-center justify-center"
+                >
+                  Get Help Today <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
               </div>
             </div>
           </div>
@@ -222,13 +235,12 @@ const HomePage = () => {
             <p className="text-gray-600 text-base sm:text-lg mb-8">
               We help families and children facing difficulties with care, education and support.
             </p>
-      <button 
-        onClick={() => navigate('/about')}
-        className="bg-orange-600 text-white px-5 sm:px-7 py-2 sm:py-3 rounded-full font-semibold text-base sm:text-lg hover:bg-orange-700 transition flex items-center gap-2"
-      >
-        Explore More →
-      </button>
-
+            <button 
+              onClick={() => navigate('/about')}
+              className="bg-orange-600 text-white px-5 sm:px-7 py-2 sm:py-3 rounded-full font-semibold text-base sm:text-lg hover:bg-orange-700 transition flex items-center gap-2"
+            >
+              Explore More →
+            </button>
           </div>
         </div>
       </section>
@@ -237,64 +249,63 @@ const HomePage = () => {
       <section className="flex justify-center px-4 sm:px-6 md:px-8 py-10 sm:py-20">
         <div className="w-full max-w-[1200px] flex flex-col lg:flex-row gap-6 lg:gap-12 bg-red-600 rounded-2xl p-6 sm:p-10 text-white">
 
-         {/* LEFT DONATE BOX */}
-<div className="w-full lg:w-1/2 bg-[url('https://themeshub.net/demo-charitics/assets/images/hero/hero-dark.jpg')] bg-cover bg-center rounded-2xl p-6 sm:p-8 min-h-[280px]">
-  <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Custome Donate Now</h2>
+          {/* LEFT DONATE BOX */}
+          <div className="w-full lg:w-1/2 bg-[url('https://themeshub.net/demo-charitics/assets/images/hero/hero-dark.jpg')] bg-cover bg-center rounded-2xl p-6 sm:p-8 min-h-[280px]">
 
-  <div className="flex flex-wrap gap-2 sm:gap-3 mb-4">
-    {["500", "1000", "1500", "2000", "2500"].map((amt, i) => (
-      <button
-        key={i}
-        onClick={() => {
-          // Set the clicked amount to the input field
-          const input = document.getElementById('donation-amount');
-          if (input) {
-            input.value = amt;
-          }
-        }}
-        className={`px-3 sm:px-4 py-1 sm:py-2 rounded-full font-semibold border-none cursor-pointer ${
-          i === 0 ? "bg-orange-500 text-white" : "bg-white text-black"
-        }`}
-      >
-        {amt}
-      </button>
-    ))}
-  </div>
+            <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Custom Donate Now</h2>
 
-  <div className="flex gap-2 sm:gap-3">
-    <input
-      id="donation-amount"
-      type="number"
-      placeholder="10"
-      className="flex-1 p-2 sm:p-3 rounded-full border-none"
-    />
-    <button 
-      onClick={() => window.location.href = '/industries'}
-      className="px-4 sm:px-6 py-2 sm:py-3 bg-orange-500 text-white font-bold rounded-full hover:bg-orange-600 transition"
-    >
-      Donate Now
-    </button>
-  </div>
-</div>
+            {/* FIXED BUTTONS */}
+            <div className="flex flex-wrap gap-2 sm:gap-3 mb-4">
+              {["500", "1000", "1500", "2000", "2500"].map((amt) => (
+                <button
+                  key={amt}
+                  onClick={() => setDonationAmount(amt)}
+                  className={`px-3 sm:px-4 py-1 sm:py-2 rounded-full font-semibold
+                    ${donationAmount === amt ? "bg-orange-500 text-white" : "bg-white text-black"}
+                    transition-all`}
+                >
+                  ₹{amt}
+                </button>
+              ))}
+            </div>
 
-          {/* RIGHT */}
+            {/* INPUT + DONATE BUTTON */}
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+              <input
+                type="number"
+                value={donationAmount}
+                onChange={(e) => setDonationAmount(e.target.value)}
+                placeholder="Enter amount"
+                className="flex-1 p-2 sm:p-3 rounded-full text-black"
+              />
+
+              <button
+                onClick={() => navigate("/industries")}
+                className="px-4 sm:px-6 py-2 sm:py-3 bg-orange-500 text-white font-bold rounded-full hover:bg-orange-600 transition"
+              >
+                Donate Now
+              </button>
+            </div>
+          </div>
+
+          {/* RIGHT SIDE */}
           <div className="w-full lg:w-1/2 p-4 sm:p-6 flex flex-col justify-center">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 sm:mb-4">
               Support Kids by Raising <br /> Valuable Donations
             </h1>
 
-            <p className="text-base sm:text-lg mb-2">Raised: $25,000</p>
+            <p className="text-base sm:text-lg mb-2">Raised: ₹{raised.toLocaleString()}</p>
 
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value="64"
-              readOnly
-              className="w-full mb-2 sm:mb-4"
-            />
+            {/* Progress bar */}
+           <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2 sm:mb-4">
+  <div 
+    className="bg-orange-500 h-2.5 rounded-full" 
+    style={{ width: `${progress}%` }}
+  ></div>
+</div>
 
-            <p className="text-right text-sm sm:text-base">Goal: $30,000</p>
+
+            <p className="text-right text-sm sm:text-base">Goal: ₹{goal.toLocaleString()}</p>
           </div>
         </div>
       </section>
@@ -306,8 +317,6 @@ const HomePage = () => {
             {counters.map((item, index) => (
               <div key={index} className="flex flex-col items-center text-center group">
                 <div className="w-24 sm:w-32 h-24 sm:h-32 rounded-full border-4 border-blue-500 flex flex-col items-center justify-center mb-4 sm:mb-6 hover:border-blue-600 hover:bg-blue-50 transition-all duration-300">
-                  {/* Icons dynamically */}
-                  {/* Count */}
                   <h2 className="text-2xl sm:text-3xl font-bold text-blue-500 group-hover:text-blue-600 transition-colors">
                     {item.count}
                   </h2>
@@ -328,13 +337,14 @@ const HomePage = () => {
           <div className="text-center mb-8 sm:mb-12">
             <h5 className="text-red-500 font-semibold">Upcoming Events</h5>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mt-2 text-gray-800">
-              Charitics Information Of Event Schedule</h2>
-          <button 
-      onClick={() => navigate('/blog')}
-      className="mt-3 sm:mt-4 px-4 sm:px-6 py-2 bg-red-500 text-white rounded-lg flex items-center gap-2 mx-auto hover:bg-red-600 transition-colors"
-    >
-      Explore More <ArrowRight size={18} />
-    </button>
+              Charitics Information Of Event Schedule
+            </h2>
+            <button 
+              onClick={() => navigate('/blog')}
+              className="mt-3 sm:mt-4 px-4 sm:px-6 py-2 bg-red-500 text-white rounded-lg flex items-center gap-2 mx-auto hover:bg-red-600 transition-colors"
+            >
+              Explore More <ArrowRight size={18} />
+            </button>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
@@ -411,23 +421,23 @@ const HomePage = () => {
                   className="flex transition-transform duration-500 ease-in-out"
                   style={{ transform: `translateX(-${currentTestimonial * 100}%)` }}
                 >
-                  {[...Array(4)].map((_, index) => (
+                  {testimonials.map((testimonial, index) => (
                     <div key={index} className="w-full flex-shrink-0 px-2 sm:px-4">
                       <p className="text-orange-500 text-3xl sm:text-5xl mb-2 sm:mb-4">❝</p>
                       <p className="text-gray-600 text-sm sm:text-lg leading-relaxed">
-                        "{testimonials[index % testimonials.length].content}"
+                        "{testimonial.content}"
                       </p>
                       <div className="flex items-center gap-2 sm:gap-4 mt-4 sm:mt-8">
                         <img
                           src={`https://i.pravatar.cc/60?img=${index+12}`}
                           className="w-10 sm:w-14 h-10 sm:h-14 rounded-full"
-                          alt={testimonials[index % testimonials.length].name}
+                          alt={testimonial.name}
                         />
                         <div>
                           <h4 className="text-sm sm:text-xl font-bold text-gray-900">
-                            {testimonials[index % testimonials.length].name}
+                            {testimonial.name}
                           </h4>
-                          <p className="text-xs sm:text-sm text-gray-500">{testimonials[index % testimonials.length].role}</p>
+                          <p className="text-xs sm:text-sm text-gray-500">{testimonial.role}</p>
                         </div>
                       </div>
                     </div>
@@ -438,13 +448,13 @@ const HomePage = () => {
               {/* Navigation arrows */}
               <div className="flex items-center gap-2 sm:gap-4 mt-2 sm:mt-8">
                 <button 
-                  onClick={() => setCurrentTestimonial((prev) => prev === 0 ? 3 : prev - 1)}
+                  onClick={() => setCurrentTestimonial((prev) => prev === 0 ? testimonials.length - 1 : prev - 1)}
                   className="w-8 sm:w-10 h-8 sm:h-10 border rounded-full flex items-center justify-center hover:bg-gray-100 transition"
                 >
                   ←
                 </button>
                 <button 
-                  onClick={() => setCurrentTestimonial((prev) => (prev + 1) % 4)}
+                  onClick={() => setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)}
                   className="w-8 sm:w-10 h-8 sm:h-10 border rounded-full flex items-center justify-center hover:bg-gray-100 transition"
                 >
                   →
@@ -453,7 +463,7 @@ const HomePage = () => {
 
               {/* Testimonial Indicators */}
               <div className="flex justify-center gap-1 sm:gap-2 mt-2 sm:mt-6">
-                {[0, 1, 2, 3].map((index) => (
+                {testimonials.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentTestimonial(index)}
@@ -468,7 +478,10 @@ const HomePage = () => {
           </div>
 
           <div className="mt-6 sm:mt-10 flex justify-end">
-            <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow transition flex items-center gap-2 text-sm sm:text-base">
+            <button 
+              onClick={() => navigate("/testimonials")}
+              className="bg-orange-500 hover:bg-orange-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow transition flex items-center gap-2 text-sm sm:text-base"
+            >
               ➤ All Testimonials
             </button>
           </div>
@@ -531,19 +544,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

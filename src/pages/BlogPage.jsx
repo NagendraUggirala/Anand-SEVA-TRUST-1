@@ -27,27 +27,8 @@ const BlogPage = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const blogPageStyle = {
-    width: '100%',
-    margin: '0 auto',
-    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-    backgroundColor: '#f5f7fa',
-    minHeight: '100vh'
-  };
-
-  const blogContainerStyle = {
-    maxWidth: '1200px',
-    margin: '0 auto',
-    padding: '0 20px',
-    display: windowWidth > 1024 ? 'grid' : 'block',
-    gridTemplateColumns: windowWidth > 1024 ? '300px 1fr' : '1fr',
-    gap: '30px',
-    alignItems: 'start'
-  };
-
-  // Sample blog data (same as before)
+  // Sample blog data
   const samplePosts = [
-    // ... (same sample posts data as before)
     {
       id: 1,
       title: "Anand Seva Trust - Our Mission & Vision",
@@ -61,7 +42,7 @@ const BlogPage = () => {
       author: "Srikanth Reddy - Trust Chairman",
       date: "2024-01-15",
       category: "About Us",
-      image: "https://images.unsplash.com/flagged/photo-1574097656146-0b43b7660cb6?fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2hpbGQlMjBlZHVjYXRpb258ZW58MHx8MHx8fDA%3D&ixlib=rb-4.1.0&q=60&w=3000",
+      image: "https://images.unsplash.com/flagged/photo-1574097656146-0b43b7660cb6?fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2hpbGQlMjBlZHVjYXRpb258ZW58MHx8MHx8fDA%3D&ixlib=rb-4.1.0&q=60&w=3000%22",
       readTime: "3 min read",
       likes: 42,
       views: 1250
@@ -76,11 +57,11 @@ const BlogPage = () => {
       • Collaborated with local NGOs
       • Provided nutritional support for children
       
-      Each food kit contained rice, pulses, oil, and essential spices sufficient for a family of four for one month. Special thanks to all our volunteers and donors who made this possible.`,
+      Each food kit contained rice, pulses, oil, and essential spices sufficient for a family of four for one month.`,
       author: "Priya Sharma - Event Coordinator",
       date: "2024-01-10",
       category: "Events",
-      image: "https://www.snehdhara.org/wp-content/uploads/2024/09/food-distribution-sector-37-gurgaon-21-09-2024-4.jpeg",
+      image: "https://thumbs.dreamstime.com/b/gaya-bihar-india-july-poor-children-kids-queue-free-food-packet-distribution-288072253.jpg",
       readTime: "4 min read",
       likes: 67,
       views: 890
@@ -94,11 +75,11 @@ const BlogPage = () => {
       • 45 students for medical studies
       • 30 students for degree programs
       
-      Selection process involved written tests, interviews, and family income verification. We also provide mentorship and career guidance to all scholarship recipients to ensure their academic success.`,
+      Selection process involved written tests, interviews, and family income verification.`,
       author: "Dr. Ramesh Kumar - Education Head",
       date: "2024-01-05",
       category: "Programs",
-      image: "https://images.unsplash.com/photo-1573894999291-f440466112cc?fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW5kaWFuJTIwY2xhc3Nyb29tfGVufDB8fDB8fHww&ixlib=rb-4.1.0&q=60&w=3000",
+      image: "https://images.unsplash.com/photo-1573894999291-f440466112cc?fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW5kaWFuJTIwY2xhc3Nyb29tfGVufDB8fDB8fHww&ixlib=rb-4.1.0&q=60&w=3000%22",
       readTime: "5 min read",
       likes: 89,
       views: 1560
@@ -113,11 +94,11 @@ const BlogPage = () => {
       • Specialist doctors consultation
       • Health awareness sessions
       
-      Common issues addressed: diabetes, hypertension, vision problems, and general health checkups. We plan to conduct such camps monthly in different villages.`,
+      Common issues addressed: diabetes, hypertension, vision problems.`,
       author: "Dr. Anjali Mehta - Medical Coordinator",
       date: "2024-01-02",
       category: "Healthcare",
-      image: "https://www.bec.org/wp-content/uploads/2024/08/VZG260824-3.jpg",
+      image: "https://satyafoundation.org/wp-content/uploads/2023/05/basoli9.jpg",
       readTime: "3 min read",
       likes: 56,
       views: 780
@@ -127,13 +108,13 @@ const BlogPage = () => {
       title: "Success Story: From Student to Doctor",
       content: `Meet Ravi, one of our first scholarship recipients who is now a successful doctor:
       
-      "Anand Seva Trust supported my MBBS education when my family couldn't afford it. Today, I'm working as a resident doctor and giving back to the community that supported me."
+      "Anand Seva Trust supported my MBBS education when my family couldn't afford it. Today, I'm working as a resident doctor and giving back to the community."
       
-      Ravi now volunteers at our medical camps and inspires other students to pursue their dreams despite financial challenges.`,
+      Ravi now volunteers at our medical camps and inspires other students.`,
       author: "Geetha Reddy - Success Stories Team",
       date: "2023-12-28",
       category: "Success Stories",
-      image: "https://satyafoundation.org/wp-content/uploads/2023/05/basoli9.jpg",
+      image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=500",
       readTime: "4 min read",
       likes: 112,
       views: 2100
@@ -148,11 +129,11 @@ const BlogPage = () => {
       • Coordinated medical camps
       • Fundraising activities
       
-      "Volunteering with Anand Seva Trust has given me purpose and the satisfaction of making a difference in people's lives." - Suresh Kumar`,
+      "Volunteering with Anand Seva Trust has given me purpose." - Suresh Kumar`,
       author: "Volunteer Management Team",
       date: "2023-12-20",
       category: "Volunteer Stories",
-      image: "https://media.assettype.com/homegrown/import/book/12053-lzsktptfbl-1587451566.jpeg?auto=format%2Ccompress&enlarge=true&fit=max&h=675&w=1200",
+      image: "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500",
       readTime: "3 min read",
       likes: 78,
       views: 950
@@ -206,7 +187,6 @@ const BlogPage = () => {
     setIsMobileMenuOpen(false);
   };
 
-  // ... (other handler functions remain the same)
   const handleLikeClick = (postId) => {
     setLikedPosts(prev => ({
       ...prev,
@@ -301,8 +281,24 @@ const BlogPage = () => {
     return 'repeat(auto-fit, minmax(380px, 1fr))';
   };
 
+  const blogContainerStyle = {
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: '0 20px',
+    display: windowWidth > 1024 ? 'grid' : 'block',
+    gridTemplateColumns: windowWidth > 1024 ? '300px 1fr' : '1fr',
+    gap: '30px',
+    alignItems: 'start'
+  };
+
   return (
-    <div style={blogPageStyle}>
+    <div style={{
+      width: '100%',
+      margin: '0 auto',
+      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+      backgroundColor: '#f5f7fa',
+      minHeight: '100vh'
+    }}>
       {/* Mobile Header */}
       {windowWidth < 1024 && !selectedPost && (
         <div style={{
@@ -348,9 +344,7 @@ const BlogPage = () => {
           margin: '0', 
           fontSize: windowWidth < 768 ? '2.5rem' : windowWidth < 1024 ? '3rem' : '3.5rem', 
           fontWeight: '700', 
-          marginBottom: '15px',
-          textShadow: '2px 2px 6px rgba(0,0,0,0.4)',
-          lineHeight: '1.2'
+          marginBottom: '15px'
         }}>
           Anand Seva Trust 
         </h1>
@@ -358,17 +352,11 @@ const BlogPage = () => {
           fontSize: windowWidth < 768 ? '1.2rem' : '1.5rem', 
           margin: '0', 
           opacity: '0.95', 
-          marginBottom: '35px',
-          fontWeight: '300',
-          padding: '0 10px'
+          marginBottom: '35px'
         }}>
           Sharing Stories of Care, Service & Community Support
         </p>
-        <div style={{ 
-          maxWidth: '400px', 
-          margin: '0 auto',
-          padding: '0 20px'
-        }}>
+        <div style={{ maxWidth: '400px', margin: '0 auto' }}>
           <input
             type="text"
             placeholder="Search blog posts..."
@@ -380,183 +368,156 @@ const BlogPage = () => {
               borderRadius: '25px',
               border: 'none',
               fontSize: '16px',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.25)',
-              outline: 'none'
+              boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
             }}
           />
         </div>
       </div>
 
-      {selectedPost ? (
-        <div style={{ 
-          maxWidth: '1200px', 
-          margin: '0 auto', 
-          padding: windowWidth < 768 ? '0 15px' : '0 20px' 
-        }}>
-          <BlogPostDetail 
-            post={selectedPost} 
-            onBack={handleBackToList}
-            onLike={handleLikeClick}
-            onBookmark={handleBookmarkClick}
-            onShare={handleShareClick}
-            onDonate={handleDonateClick}
-            onVolunteer={handleVolunteerClick}
-            comments={comments[selectedPost.id] || []}
-            onCommentSubmit={handleCommentSubmit}
-            onCommentLike={handleCommentLike}
-            newComment={newComment}
-            setNewComment={setNewComment}
-            liked={likedPosts[selectedPost.id] || false}
-            bookmarked={bookmarkedPosts[selectedPost.id] || false}
-            viewCount={viewCount[selectedPost.id] || selectedPost.views}
-            relatedPosts={relatedPosts}
-            onPostClick={handlePostClick}
-            windowWidth={windowWidth}
-          />
-        </div>
-      ) : (
-        <div style={blogContainerStyle}>
-          {/* Sidebar */}
-          <div style={{
-            background: 'white',
-            padding: windowWidth < 768 ? '20px' : '25px',
-            borderRadius: '12px',
-            height: windowWidth > 1024 ? 'fit-content' : 'auto',
-            boxShadow: '0 5px 15px rgba(0,0,0,0.08)',
-            position: windowWidth > 1024 ? 'sticky' : 'static',
-            top: windowWidth > 1024 ? '20px' : 'auto',
-            display: windowWidth < 1024 ? (isMobileMenuOpen ? 'block' : 'none') : 'block',
-            marginBottom: windowWidth < 1024 ? '20px' : '0',
-            zIndex: 999
-          }}>
-            <div style={{ marginBottom: '30px' }}>
-              <h3 style={{ 
-                color: '#333', 
-                borderBottom: '3px solid #667eea', 
-                paddingBottom: '12px',
-                marginBottom: '20px',
-                fontSize: windowWidth < 768 ? '1.2rem' : '1.4rem'
-              }}>
-                📂 Categories
-              </h3>
-              <ul style={{ listStyle: 'none', padding: '0', margin: '0' }}>
-                {categories.map((category, index) => (
-                  <li 
-                    key={index}
+      <div style={{ padding: '40px 0' }}>
+        {selectedPost ? (
+          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
+            <BlogPostDetail 
+              post={selectedPost} 
+              onBack={handleBackToList}
+              onLike={handleLikeClick}
+              onBookmark={handleBookmarkClick}
+              onShare={handleShareClick}
+              onDonate={handleDonateClick}
+              onVolunteer={handleVolunteerClick}
+              comments={comments[selectedPost.id] || []}
+              onCommentSubmit={handleCommentSubmit}
+              onCommentLike={handleCommentLike}
+              newComment={newComment}
+              setNewComment={setNewComment}
+              liked={likedPosts[selectedPost.id] || false}
+              bookmarked={bookmarkedPosts[selectedPost.id] || false}
+              viewCount={viewCount[selectedPost.id] || selectedPost.views}
+              relatedPosts={relatedPosts}
+              onPostClick={handlePostClick}
+              windowWidth={windowWidth}
+            />
+          </div>
+        ) : (
+          <div style={blogContainerStyle}>
+            {/* Sidebar */}
+            <div style={{
+              background: 'white',
+              padding: '25px',
+              borderRadius: '12px',
+              height: windowWidth > 1024 ? 'fit-content' : 'auto',
+              boxShadow: '0 5px 15px rgba(0,0,0,0.08)',
+              position: windowWidth > 1024 ? 'sticky' : 'static',
+              top: windowWidth > 1024 ? '20px' : 'auto',
+              display: windowWidth < 1024 ? (isMobileMenuOpen ? 'block' : 'none') : 'block',
+              marginBottom: windowWidth < 1024 ? '20px' : '0'
+            }}>
+              <div style={{ marginBottom: '30px' }}>
+                <h3 style={{ color: '#333', borderBottom: '3px solid #667eea', paddingBottom: '10px', marginBottom: '20px' }}>
+                  📂 Categories
+                </h3>
+                <ul style={{ listStyle: 'none', padding: '0', margin: '0' }}>
+                  {categories.map((category, index) => (
+                    <li 
+                      key={index}
+                      style={{
+                        padding: '12px 15px',
+                        margin: '8px 0',
+                        background: selectedCategory === category ? '#667eea' : '#f8f9fa',
+                        color: selectedCategory === category ? 'white' : '#333',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        border: '1px solid #e9ecef'
+                      }}
+                      onClick={() => handleCategoryClick(category)}
+                    >
+                      {category}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Recent Posts */}
+              <div>
+                <h3 style={{ color: '#333', borderBottom: '3px solid #ffc107', paddingBottom: '10px', marginBottom: '15px' }}>
+                  🔥 Recent Posts
+                </h3>
+                {blogPosts.slice(0, 3).map(post => (
+                  <div 
+                    key={post.id} 
                     style={{
-                      padding: '12px 15px',
-                      margin: '8px 0',
-                      background: selectedCategory === category ? '#667eea' : '#f8f9fa',
-                      color: selectedCategory === category ? 'white' : '#333',
+                      padding: '12px',
+                      margin: '10px 0',
+                      background: '#f8f9fa',
                       borderRadius: '8px',
                       cursor: 'pointer',
-                      transition: 'all 0.3s ease',
                       border: '1px solid #e9ecef',
-                      fontWeight: selectedCategory === category ? '600' : '400',
-                      fontSize: windowWidth < 768 ? '14px' : '16px'
+                      transition: 'all 0.3s ease'
                     }}
-                    onClick={() => handleCategoryClick(category)}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = '#667eea';
+                      e.currentTarget.style.color = 'white';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = '#f8f9fa';
+                      e.currentTarget.style.color = 'inherit';
+                    }}
+                    onClick={() => handlePostClick(post)}
                   >
-                    {category}
-                  </li>
+                    <h4 style={{ margin: '0 0 5px 0', fontSize: '14px' }}>{post.title}</h4>
+                    <span style={{ fontSize: '12px', opacity: '0.7' }}>{post.date}</span>
+                  </div>
                 ))}
-              </ul>
-            </div>
-
-            {/* Recent Posts */}
-            <div>
-              <h3 style={{ 
-                color: '#333', 
-                borderBottom: '3px solid #ffc107', 
-                paddingBottom: '12px',
-                marginBottom: '15px',
-                fontSize: windowWidth < 768 ? '1.2rem' : '1.4rem'
-              }}>
-                🔥 Recent Posts
-              </h3>
-              {blogPosts.slice(0, 3).map(post => (
-                <div 
-                  key={post.id} 
-                  style={{
-                    padding: '12px',
-                    margin: '10px 0',
-                    background: '#f8f9fa',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    border: '1px solid #e9ecef',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#667eea';
-                    e.currentTarget.style.color = 'white';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = '#f8f9fa';
-                    e.currentTarget.style.color = 'inherit';
-                  }}
-                  onClick={() => handlePostClick(post)}
-                >
-                  <h4 style={{ 
-                    margin: '0 0 5px 0', 
-                    fontSize: windowWidth < 768 ? '13px' : '14px', 
-                    lineHeight: '1.4' 
-                  }}>
-                    {post.title}
-                  </h4>
-                  <span style={{ 
-                    fontSize: windowWidth < 768 ? '11px' : '12px', 
-                    opacity: '0.7' 
-                  }}>
-                    {post.date}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Main Content */}
-          <div>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: getGridColumns(),
-              gap: windowWidth < 768 ? '20px' : '25px'
-            }}>
-              {filteredPosts.map(post => (
-                <BlogPostCard 
-                  key={post.id} 
-                  post={post} 
-                  onClick={handlePostClick}
-                  onLike={handleLikeClick}
-                  onBookmark={handleBookmarkClick}
-                  liked={likedPosts[post.id] || false}
-                  bookmarked={bookmarkedPosts[post.id] || false}
-                  viewCount={viewCount[post.id] || post.views}
-                  windowWidth={windowWidth}
-                />
-              ))}
-            </div>
-            
-            {filteredPosts.length === 0 && (
-              <div style={{
-                textAlign: 'center',
-                padding: windowWidth < 768 ? '40px 20px' : '60px 20px',
-                background: 'white',
-                borderRadius: '12px',
-                boxShadow: '0 5px 15px rgba(0,0,0,0.08)',
-                marginTop: '20px'
-              }}>
-                <h3 style={{ color: '#666', marginBottom: '10px' }}>No posts found</h3>
-                <p style={{ color: '#888' }}>Try changing your search or category filter</p>
               </div>
-            )}
+            </div>
+
+            {/* Main Content */}
+            <div>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: getGridColumns(),
+                gap: '25px'
+              }}>
+                {filteredPosts.map(post => (
+                  <BlogPostCard 
+                    key={post.id} 
+                    post={post} 
+                    onClick={handlePostClick}
+                    onLike={handleLikeClick}
+                    onBookmark={handleBookmarkClick}
+                    liked={likedPosts[post.id] || false}
+                    bookmarked={bookmarkedPosts[post.id] || false}
+                    viewCount={viewCount[post.id] || post.views}
+                    windowWidth={windowWidth}
+                  />
+                ))}
+              </div>
+              
+              {filteredPosts.length === 0 && (
+                <div style={{
+                  textAlign: 'center',
+                  padding: '60px 20px',
+                  background: 'white',
+                  borderRadius: '12px',
+                  boxShadow: '0 5px 15px rgba(0,0,0,0.08)',
+                  marginTop: '20px'
+                }}>
+                  <h3 style={{ color: '#666', marginBottom: '10px' }}>No posts found</h3>
+                  <p style={{ color: '#888' }}>Try changing your search or category filter</p>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
+
+
     </div>
   );
 };
 
-// Blog Post Card Component - Updated for responsiveness
+// Blog Post Card Component
 const BlogPostCard = ({ post, onClick, onLike, onBookmark, liked, bookmarked, viewCount, windowWidth }) => {
   return (
     <div 
@@ -570,22 +531,18 @@ const BlogPostCard = ({ post, onClick, onLike, onBookmark, liked, bookmarked, vi
         border: '1px solid #e9ecef'
       }}
       onMouseEnter={(e) => {
-        if (windowWidth > 768) {
-          e.currentTarget.style.transform = 'translateY(-8px)';
-          e.currentTarget.style.boxShadow = '0 15px 35px rgba(0,0,0,0.15)';
-        }
+        e.currentTarget.style.transform = 'translateY(-5px)';
+        e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.15)';
       }}
       onMouseLeave={(e) => {
-        if (windowWidth > 768) {
-          e.currentTarget.style.transform = 'translateY(0)';
-          e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.1)';
-        }
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.1)';
       }}
       onClick={() => onClick(post)}
     >
       <div style={{
         position: 'relative',
-        height: windowWidth < 768 ? '180px' : '220px',
+        height: '220px',
         background: `url(${post.image}) center/cover no-repeat`,
         display: 'flex',
         alignItems: 'flex-end',
@@ -598,8 +555,7 @@ const BlogPostCard = ({ post, onClick, onLike, onBookmark, liked, bookmarked, vi
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%)',
-          zIndex: 1
+          background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%)'
         }}></div>
         <span style={{
           position: 'relative',
@@ -608,67 +564,15 @@ const BlogPostCard = ({ post, onClick, onLike, onBookmark, liked, bookmarked, vi
           color: 'white',
           padding: '6px 15px',
           borderRadius: '20px',
-          fontSize: windowWidth < 768 ? '10px' : '12px',
+          fontSize: '12px',
           fontWeight: '600'
         }}>
           {post.category}
         </span>
-        <div style={{ display: 'flex', gap: '10px', zIndex: 2, position: 'relative' }}>
-          <button 
-            onClick={(e) => {
-              e.stopPropagation();
-              onLike(post.id);
-            }}
-            style={{
-              background: 'rgba(255,255,255,0.9)',
-              border: 'none',
-              borderRadius: '50%',
-              width: windowWidth < 768 ? '35px' : '40px',
-              height: windowWidth < 768 ? '35px' : '40px',
-              cursor: 'pointer',
-              fontSize: windowWidth < 768 ? '14px' : '16px',
-              color: liked ? '#ff4757' : '#666',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'all 0.3s ease'
-            }}
-          >
-            {liked ? <FaHeart /> : <FaRegHeart />}
-          </button>
-          <button 
-            onClick={(e) => {
-              e.stopPropagation();
-              onBookmark(post.id);
-            }}
-            style={{
-              background: 'rgba(255,255,255,0.9)',
-              border: 'none',
-              borderRadius: '50%',
-              width: windowWidth < 768 ? '35px' : '40px',
-              height: windowWidth < 768 ? '35px' : '40px',
-              cursor: 'pointer',
-              fontSize: windowWidth < 768 ? '14px' : '16px',
-              color: bookmarked ? '#ffd700' : '#666',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'all 0.3s ease'
-            }}
-          >
-            {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
-          </button>
-        </div>
       </div>
       
-      <div style={{ padding: windowWidth < 768 ? '15px' : '20px' }}>
-        <h3 style={{ 
-          margin: '0 0 12px 0', 
-          color: '#333',
-          fontSize: windowWidth < 768 ? '1.2rem' : '1.4rem',
-          lineHeight: '1.4',
-          minHeight: windowWidth < 768 ? '60px' : '68px'
-        }}>
+      <div style={{ padding: '20px' }}>
+        <h3 style={{ margin: '0 0 12px 0', color: '#333', fontSize: '1.3rem', lineHeight: '1.4' }}>
           {post.title}
         </h3>
         
@@ -676,59 +580,48 @@ const BlogPostCard = ({ post, onClick, onLike, onBookmark, liked, bookmarked, vi
           color: '#666',
           lineHeight: '1.6',
           marginBottom: '15px',
-          fontSize: windowWidth < 768 ? '13px' : '14px',
+          fontSize: '14px',
           display: '-webkit-box',
           WebkitLineClamp: 3,
           WebkitBoxOrient: 'vertical',
           overflow: 'hidden'
         }}>
-          {post.content.replace(/[•\-].*/g, '').substring(0, windowWidth < 768 ? 80 : 120)}...
+          {post.content.substring(0, 120)}...
         </p>
         
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          fontSize: windowWidth < 768 ? '12px' : '13px',
+          fontSize: '12px',
           color: '#888',
-          marginBottom: '15px',
-          flexWrap: 'wrap',
-          gap: '8px'
+          marginBottom: '15px'
         }}>
           <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <FaUser size={windowWidth < 768 ? 12 : 14} /> {post.author.split(' - ')[0]}
+            <FaUser size={12} /> {post.author.split(' - ')[0]}
           </span>
           <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <FaCalendar size={windowWidth < 768 ? 12 : 14} /> {post.date}
+            <FaCalendar size={12} /> {post.date}
           </span>
           <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <FaClock size={windowWidth < 768 ? 12 : 14} /> {post.readTime}
-          </span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <FaEye size={windowWidth < 768 ? 12 : 14} /> {viewCount}
+            <FaEye size={12} /> {viewCount}
           </span>
         </div>
         
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center',
-          flexDirection: windowWidth < 480 ? 'column' : 'row',
-          gap: windowWidth < 480 ? '10px' : '0'
+          alignItems: 'center'
         }}>
           <button style={{
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             color: 'white',
             border: 'none',
-            padding: windowWidth < 768 ? '8px 20px' : '10px 25px',
+            padding: '10px 25px',
             borderRadius: '25px',
             cursor: 'pointer',
-            fontSize: windowWidth < 768 ? '13px' : '14px',
-            fontWeight: '600',
-            transition: 'all 0.3s ease',
-            flex: windowWidth < 480 ? 'none' : 1,
-            marginRight: windowWidth < 480 ? '0' : '10px',
-            width: windowWidth < 480 ? '100%' : 'auto'
+            fontSize: '14px',
+            fontWeight: '600'
           }}>
             Read More
           </button>
@@ -736,11 +629,61 @@ const BlogPostCard = ({ post, onClick, onLike, onBookmark, liked, bookmarked, vi
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '8px',
-            color: '#666',
-            fontSize: windowWidth < 768 ? '12px' : '13px'
+            gap: '12px'
           }}>
-            <span>❤️ {post.likes + (liked ? 1 : 0)}</span>
+            {/* Heart Button */}
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                onLike(post.id);
+              }}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '16px',
+                color: liked ? '#ff4757' : '#666',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+                padding: '8px 12px',
+                borderRadius: '20px',
+                transition: 'all 0.3s ease',
+                background: liked ? 'rgba(255, 71, 87, 0.1)' : 'rgba(102, 102, 102, 0.1)'
+              }}
+            >
+              {liked ? <FaHeart /> : <FaRegHeart />}
+              <span style={{ fontSize: '13px', fontWeight: '600' }}>
+                {post.likes + (liked ? 1 : 0)}
+              </span>
+            </button>
+
+            {/* Save Button */}
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                onBookmark(post.id);
+              }}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '16px',
+                color: bookmarked ? '#ffd700' : '#666',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+                padding: '8px 12px',
+                borderRadius: '20px',
+                transition: 'all 0.3s ease',
+                background: bookmarked ? 'rgba(255, 215, 0, 0.1)' : 'rgba(102, 102, 102, 0.1)'
+              }}
+            >
+              {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
+              <span style={{ fontSize: '13px', fontWeight: '600' }}>
+                {bookmarked ? 'Saved' : 'Save'}
+              </span>
+            </button>
           </div>
         </div>
       </div>
@@ -748,7 +691,7 @@ const BlogPostCard = ({ post, onClick, onLike, onBookmark, liked, bookmarked, vi
   );
 };
 
-// Blog Post Detail Component - Updated for responsiveness
+// Blog Post Detail Component
 const BlogPostDetail = ({ 
   post, 
   onBack, 
@@ -777,13 +720,12 @@ const BlogPostDetail = ({
           background: 'none',
           border: '2px solid #667eea',
           color: '#667eea',
-          padding: windowWidth < 768 ? '10px 20px' : '12px 25px',
+          padding: '12px 25px',
           borderRadius: '25px',
           cursor: 'pointer',
-          fontSize: windowWidth < 768 ? '14px' : '15px',
+          fontSize: '15px',
           fontWeight: '600',
           marginBottom: '30px',
-          transition: 'all 0.3s ease',
           display: 'flex',
           alignItems: 'center',
           gap: '8px'
@@ -795,160 +737,106 @@ const BlogPostDetail = ({
       <article style={{
         background: 'white',
         borderRadius: '15px',
-        padding: windowWidth < 768 ? '20px' : '40px',
+        padding: '40px',
         boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
         marginBottom: '30px'
       }}>
         <header style={{ marginBottom: '30px' }}>
+          <h1 style={{
+            fontSize: '2.5rem',
+            color: '#333',
+            marginBottom: '20px',
+            lineHeight: '1.3'
+          }}>
+            {post.title}
+          </h1>
+          
           <div style={{
             display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            marginBottom: '20px',
+            gap: '20px',
+            alignItems: 'center',
             flexWrap: 'wrap',
-            gap: '15px',
-            flexDirection: windowWidth < 768 ? 'column' : 'row'
+            fontSize: '15px',
+            color: '#666',
+            marginBottom: '20px'
           }}>
-            <div style={{ flex: 1 }}>
-              <h1 style={{
-                fontSize: windowWidth < 768 ? '1.8rem' : windowWidth < 1024 ? '2.2rem' : '2.5rem',
-                color: '#333',
-                marginBottom: '15px',
-                lineHeight: '1.3',
-                fontWeight: '700'
-              }}>
-                {post.title}
-              </h1>
-              
-              <div style={{
-                display: 'flex',
-                gap: windowWidth < 768 ? '10px' : '20px',
-                alignItems: 'center',
-                flexWrap: 'wrap',
-                fontSize: windowWidth < 768 ? '13px' : '15px',
-                color: '#666',
-                marginBottom: '20px'
-              }}>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '5px', fontWeight: '600' }}>
-                  <FaUser size={windowWidth < 768 ? 14 : 16} /> {post.author}
-                </span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  <FaCalendar size={windowWidth < 768 ? 14 : 16} /> {post.date}
-                </span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  <FaClock size={windowWidth < 768 ? 14 : 16} /> {post.readTime}
-                </span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  <FaEye size={windowWidth < 768 ? 14 : 16} /> {viewCount} views
-                </span>
-                <span style={{
-                  background: '#667eea',
-                  color: 'white',
-                  padding: '6px 15px',
-                  borderRadius: '20px',
-                  fontSize: windowWidth < 768 ? '11px' : '13px',
-                  fontWeight: '600'
-                }}>
-                  {post.category}
-                </span>
-              </div>
-            </div>
-            
-            <div style={{ 
-              display: 'flex', 
-              gap: '10px', 
-              flexWrap: 'wrap',
-              width: windowWidth < 768 ? '100%' : 'auto'
+            <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <FaUser size={16} /> {post.author}
+            </span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <FaCalendar size={16} /> {post.date}
+            </span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <FaClock size={16} /> {post.readTime}
+            </span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <FaEye size={16} /> {viewCount} views
+            </span>
+            <span style={{
+              background: '#667eea',
+              color: 'white',
+              padding: '6px 15px',
+              borderRadius: '20px',
+              fontSize: '13px',
+              fontWeight: '600'
             }}>
-              <button 
-                onClick={() => onLike(post.id)}
-                style={{
-                  background: liked ? '#ff4757' : '#f8f9fa',
-                  color: liked ? 'white' : '#666',
-                  border: `2px solid ${liked ? '#ff4757' : '#dee2e6'}`,
-                  padding: windowWidth < 768 ? '10px 15px' : '12px 20px',
-                  borderRadius: '25px',
-                  cursor: 'pointer',
-                  fontSize: windowWidth < 768 ? '13px' : '14px',
-                  fontWeight: '600',
-                  transition: 'all 0.3s ease',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  minWidth: windowWidth < 768 ? '100px' : '120px',
-                  justifyContent: 'center',
-                  flex: windowWidth < 768 ? 1 : 'none'
-                }}
-              >
-                {liked ? <FaHeart /> : <FaRegHeart />} 
-                {liked ? 'Liked' : 'Like'} ({post.likes + (liked ? 1 : 0)})
-              </button>
-              
-              <button 
-                onClick={() => onBookmark(post.id)}
-                style={{
-                  background: bookmarked ? '#ffd700' : '#f8f9fa',
-                  color: bookmarked ? 'white' : '#666',
-                  border: `2px solid ${bookmarked ? '#ffd700' : '#dee2e6'}`,
-                  padding: windowWidth < 768 ? '10px 15px' : '12px 20px',
-                  borderRadius: '25px',
-                  cursor: 'pointer',
-                  fontSize: windowWidth < 768 ? '13px' : '14px',
-                  fontWeight: '600',
-                  transition: 'all 0.3s ease',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  justifyContent: 'center',
-                  flex: windowWidth < 768 ? 1 : 'none'
-                }}
-              >
-                {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
-                {bookmarked ? 'Saved' : 'Save'}
-              </button>
-            </div>
+              {post.category}
+            </span>
+          </div>
+          
+          <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+            <button 
+              onClick={() => onLike(post.id)}
+              style={{
+                background: liked ? '#ff4757' : '#f8f9fa',
+                color: liked ? 'white' : '#666',
+                border: `2px solid ${liked ? '#ff4757' : '#dee2e6'}`,
+                padding: '10px 20px',
+                borderRadius: '25px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '600',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+            >
+              {liked ? <FaHeart /> : <FaRegHeart />} 
+              {liked ? 'Liked' : 'Like'} ({post.likes + (liked ? 1 : 0)})
+            </button>
+            
+            <button 
+              onClick={() => onBookmark(post.id)}
+              style={{
+                background: bookmarked ? '#ffd700' : '#f8f9fa',
+                color: bookmarked ? 'white' : '#666',
+                border: `2px solid ${bookmarked ? '#ffd700' : '#dee2e6'}`,
+                padding: '10px 20px',
+                borderRadius: '25px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '600',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+            >
+              {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
+              {bookmarked ? 'Saved' : 'Save'}
+            </button>
           </div>
         </header>
 
         <div style={{
-          height: windowWidth < 768 ? '250px' : windowWidth < 1024 ? '350px' : '400px',
+          height: '400px',
           background: `url(${post.image}) center/cover no-repeat`,
           borderRadius: '12px',
-          marginBottom: '30px',
-          position: 'relative'
-        }}>
-          <div style={{
-            position: 'absolute',
-            bottom: '20px',
-            left: '20px',
-            right: '20px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}>
-            <div style={{
-              background: 'rgba(0,0,0,0.7)',
-              color: 'white',
-              padding: '8px 15px',
-              borderRadius: '25px',
-              fontSize: windowWidth < 768 ? '12px' : '14px'
-            }}>
-              📸 {post.category} Event
-            </div>
-          </div>
-        </div>
+          marginBottom: '30px'
+        }}></div>
 
-        <div style={{ 
-          lineHeight: '1.8', 
-          color: '#444',
-          fontSize: windowWidth < 768 ? '15px' : '16px',
-          marginBottom: '40px'
-        }}>
+        <div style={{ lineHeight: '1.8', color: '#444', fontSize: '16px', marginBottom: '40px' }}>
           {post.content.split('\n').map((paragraph, index) => (
-            <p key={index} style={{ 
-              marginBottom: paragraph.trim().startsWith('•') ? '8px' : '20px',
-              paddingLeft: paragraph.trim().startsWith('•') ? '20px' : '0'
-            }}>
+            <p key={index} style={{ marginBottom: '20px' }}>
               {paragraph}
             </p>
           ))}
@@ -959,8 +847,7 @@ const BlogPostDetail = ({
           display: 'flex',
           gap: '15px',
           margin: '40px 0',
-          flexWrap: 'wrap',
-          flexDirection: windowWidth < 480 ? 'column' : 'row'
+          flexWrap: 'wrap'
         }}>
           <button 
             onClick={onDonate}
@@ -968,18 +855,11 @@ const BlogPostDetail = ({
               background: 'linear-gradient(135deg, #28a745 0%, #20c997 100%)',
               color: 'white',
               border: 'none',
-              padding: windowWidth < 768 ? '12px 20px' : '15px 25px',
+              padding: '15px 25px',
               borderRadius: '8px',
               cursor: 'pointer',
-              fontSize: windowWidth < 768 ? '14px' : '15px',
-              fontWeight: '600',
-              transition: 'all 0.3s ease',
-              flex: windowWidth < 480 ? 'none' : 1,
-              minWidth: windowWidth < 480 ? '100%' : '200px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px'
+              fontSize: '15px',
+              fontWeight: '600'
             }}
           >
             💝 Donate to This Cause
@@ -990,18 +870,11 @@ const BlogPostDetail = ({
               background: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%)',
               color: 'white',
               border: 'none',
-              padding: windowWidth < 768 ? '12px 20px' : '15px 25px',
+              padding: '15px 25px',
               borderRadius: '8px',
               cursor: 'pointer',
-              fontSize: windowWidth < 768 ? '14px' : '15px',
-              fontWeight: '600',
-              transition: 'all 0.3s ease',
-              flex: windowWidth < 480 ? 'none' : 1,
-              minWidth: windowWidth < 480 ? '100%' : '200px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px'
+              fontSize: '15px',
+              fontWeight: '600'
             }}
           >
             👥 Volunteer for This Program
@@ -1014,19 +887,8 @@ const BlogPostDetail = ({
           paddingTop: '30px',
           borderTop: '2px solid #e9ecef'
         }}>
-          <h3 style={{ 
-            marginBottom: '20px', 
-            color: '#333',
-            fontSize: windowWidth < 768 ? '1.2rem' : '1.4rem'
-          }}>
-            Share this post:
-          </h3>
-          <div style={{ 
-            display: 'flex', 
-            gap: '12px', 
-            flexWrap: 'wrap',
-            justifyContent: windowWidth < 480 ? 'center' : 'flex-start'
-          }}>
+          <h3 style={{ marginBottom: '20px', color: '#333' }}>Share this post:</h3>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
             {[
               { platform: 'facebook', label: 'Facebook', color: '#3b5998', icon: <FaFacebookF /> },
               { platform: 'twitter', label: 'Twitter', color: '#1da1f2', icon: <FaTwitter /> },
@@ -1040,20 +902,17 @@ const BlogPostDetail = ({
                   background: color,
                   color: 'white',
                   border: 'none',
-                  padding: windowWidth < 768 ? '10px 15px' : '12px 20px',
+                  padding: '12px 20px',
                   borderRadius: '8px',
                   cursor: 'pointer',
-                  fontSize: windowWidth < 768 ? '13px' : '14px',
+                  fontSize: '14px',
                   fontWeight: '600',
-                  transition: 'all 0.3s ease',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px',
-                  minWidth: windowWidth < 480 ? '140px' : '140px',
-                  flex: windowWidth < 480 ? 1 : 'none'
+                  gap: '8px'
                 }}
               >
-                {icon} {windowWidth < 480 ? '' : label}
+                {icon} {label}
               </button>
             ))}
           </div>
@@ -1065,22 +924,16 @@ const BlogPostDetail = ({
         <div style={{
           background: 'white',
           borderRadius: '15px',
-          padding: windowWidth < 768 ? '20px' : '30px',
+          padding: '30px',
           boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
           marginBottom: '30px'
         }}>
-          <h2 style={{ 
-            marginBottom: '25px', 
-            color: '#333',
-            borderBottom: '3px solid #667eea',
-            paddingBottom: '10px',
-            fontSize: windowWidth < 768 ? '1.4rem' : '1.6rem'
-          }}>
+          <h2 style={{ marginBottom: '25px', color: '#333', borderBottom: '3px solid #667eea', paddingBottom: '10px' }}>
             📚 Related Posts
           </h2>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: windowWidth < 768 ? '1fr' : windowWidth < 1024 ? 'repeat(auto-fit, minmax(250px, 1fr))' : 'repeat(auto-fit, minmax(300px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
             gap: '20px'
           }}>
             {relatedPosts.map(relatedPost => (
@@ -1095,34 +948,19 @@ const BlogPostDetail = ({
                   border: '1px solid #e9ecef'
                 }}
                 onMouseEnter={(e) => {
-                  if (windowWidth > 768) {
-                    e.currentTarget.style.transform = 'translateY(-5px)';
-                    e.currentTarget.style.background = '#667eea';
-                    e.currentTarget.style.color = 'white';
-                  }
+                  e.currentTarget.style.transform = 'translateY(-5px)';
+                  e.currentTarget.style.background = '#667eea';
+                  e.currentTarget.style.color = 'white';
                 }}
                 onMouseLeave={(e) => {
-                  if (windowWidth > 768) {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.background = '#f8f9fa';
-                    e.currentTarget.style.color = 'inherit';
-                  }
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.background = '#f8f9fa';
+                  e.currentTarget.style.color = 'inherit';
                 }}
                 onClick={() => onPostClick(relatedPost)}
               >
-                <h4 style={{ 
-                  margin: '0 0 10px 0', 
-                  fontSize: windowWidth < 768 ? '14px' : '16px', 
-                  lineHeight: '1.4' 
-                }}>
-                  {relatedPost.title}
-                </h4>
-                <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between', 
-                  fontSize: windowWidth < 768 ? '11px' : '12px', 
-                  opacity: '0.7' 
-                }}>
+                <h4 style={{ margin: '0 0 10px 0', fontSize: '16px' }}>{relatedPost.title}</h4>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', opacity: '0.7' }}>
                   <span>{relatedPost.date}</span>
                   <span>{relatedPost.readTime}</span>
                 </div>
@@ -1136,16 +974,11 @@ const BlogPostDetail = ({
       <div style={{
         background: 'white',
         borderRadius: '15px',
-        padding: windowWidth < 768 ? '20px' : '30px',
-        boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
+        padding: '30px',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+        marginBottom: '60px'
       }}>
-        <h2 style={{ 
-          marginBottom: '25px', 
-          color: '#333',
-          borderBottom: '3px solid #667eea',
-          paddingBottom: '10px',
-          fontSize: windowWidth < 768 ? '1.4rem' : '1.6rem'
-        }}>
+        <h2 style={{ marginBottom: '25px', color: '#333', borderBottom: '3px solid #667eea', paddingBottom: '10px' }}>
           💬 Comments ({comments.length})
         </h2>
         
@@ -1160,11 +993,10 @@ const BlogPostDetail = ({
               padding: '15px',
               borderRadius: '8px',
               border: '2px solid #e9ecef',
-              fontSize: windowWidth < 768 ? '14px' : '15px',
+              fontSize: '15px',
               minHeight: '100px',
               resize: 'vertical',
-              marginBottom: '15px',
-              fontFamily: 'inherit'
+              marginBottom: '15px'
             }}
           />
           <button 
@@ -1173,13 +1005,11 @@ const BlogPostDetail = ({
               background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
               color: 'white',
               border: 'none',
-              padding: windowWidth < 768 ? '10px 25px' : '12px 30px',
+              padding: '12px 30px',
               borderRadius: '8px',
               cursor: 'pointer',
-              fontSize: windowWidth < 768 ? '14px' : '15px',
-              fontWeight: '600',
-              transition: 'all 0.3s ease',
-              width: windowWidth < 480 ? '100%' : 'auto'
+              fontSize: '15px',
+              fontWeight: '600'
             }}
           >
             Post Comment
@@ -1191,7 +1021,7 @@ const BlogPostDetail = ({
           {comments.map(comment => (
             <div key={comment.id} style={{
               background: '#f8f9fa',
-              padding: windowWidth < 768 ? '15px' : '20px',
+              padding: '20px',
               borderRadius: '10px',
               marginBottom: '15px',
               border: '1px solid #e9ecef'
@@ -1200,24 +1030,12 @@ const BlogPostDetail = ({
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'flex-start',
-                marginBottom: '10px',
-                flexDirection: windowWidth < 480 ? 'column' : 'row',
-                gap: windowWidth < 480 ? '5px' : '0'
+                marginBottom: '10px'
               }}>
-                <strong style={{ color: '#333', fontSize: windowWidth < 768 ? '14px' : '16px' }}>{comment.user}</strong>
-                <span style={{ 
-                  color: '#666', 
-                  fontSize: windowWidth < 768 ? '12px' : '13px' 
-                }}>
-                  {comment.date}
-                </span>
+                <strong style={{ color: '#333' }}>{comment.user}</strong>
+                <span style={{ color: '#666', fontSize: '13px' }}>{comment.date}</span>
               </div>
-              <p style={{ 
-                margin: '0 0 10px 0', 
-                color: '#555', 
-                lineHeight: '1.6',
-                fontSize: windowWidth < 768 ? '14px' : '15px'
-              }}>
+              <p style={{ margin: '0 0 10px 0', color: '#555', lineHeight: '1.6' }}>
                 {comment.text}
               </p>
               <button 
@@ -1227,26 +1045,20 @@ const BlogPostDetail = ({
                   border: 'none',
                   color: '#666',
                   cursor: 'pointer',
-                  fontSize: windowWidth < 768 ? '11px' : '12px',
+                  fontSize: '12px',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '5px'
                 }}
               >
-                <FaRegHeart size={windowWidth < 768 ? 12 : 14} /> Like ({comment.likes || 0})
+                <FaRegHeart size={12} /> Like ({comment.likes || 0})
               </button>
             </div>
           ))}
           
           {comments.length === 0 && (
-            <div style={{ 
-              textAlign: 'center', 
-              padding: '40px', 
-              color: '#666',
-              background: '#f8f9fa',
-              borderRadius: '10px'
-            }}>
-              <p style={{ margin: 0, fontSize: '16px' }}>No comments yet. Be the first to comment!</p>
+            <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+              <p style={{ margin: 0 }}>No comments yet. Be the first to comment!</p>
             </div>
           )}
         </div>

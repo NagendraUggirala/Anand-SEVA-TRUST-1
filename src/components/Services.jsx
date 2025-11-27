@@ -1,5 +1,21 @@
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { BookOpen, Heart, ArrowUpRight, Users, Star, Smile, Globe, School, HandHeart } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+
+import {
+  BookOpen,
+  Heart,
+  ArrowUpRight,
+  Users,
+  Star,
+  Smile,
+  Globe,
+  School,
+  HandHeart,
+} from "lucide-react";
 
 const Services = () => {
   const services = [
@@ -46,36 +62,33 @@ const Services = () => {
     {
       icon: Users,
       title: "Family Support",
-     description:
-  "Supporting community initiatives and social programs to empower individuals, raise awareness, and create a positive impact.",
-
+      description:
+        "Supporting community initiatives and social programs to empower individuals, raise awareness, and create a positive impact.",
       color: "text-purple-600",
       bgColor: "bg-gradient-to-br from-purple-200/20 to-purple-100/5",
       borderColor: "border-purple-200/20",
       hoverGradient: "hover:from-purple-300/30 hover:to-purple-200/10",
     },
     {
-  icon: HandHeart,
-  title: "Individual Care",
-  description:
-    "Providing personalized support for individuals at risk, helping them avoid unsafe paths, build resilience, and make positive life choices for a brighter future.",
-  color: "text-orange-600",
-  bgColor: "bg-gradient-to-br from-orange-200/20 to-orange-100/5",
-  borderColor: "border-orange-200/20",
-  hoverGradient: "hover:from-orange-300/30 hover:to-orange-200/10",
-},
-
-  {
-  icon: School,
-  title: "Skill Development",
-  description:
-    "Equipping children and youth with practical skills, hands-on training, and confidence to succeed academically and socially, building a strong foundation for a better future.",
-  color: "text-teal-600",
-  bgColor: "bg-gradient-to-br from-teal-200/20 to-teal-100/5",
-  borderColor: "border-teal-200/20",
-  hoverGradient: "hover:from-teal-300/30 hover:to-teal-200/10",
-},
-
+      icon: HandHeart,
+      title: "Individual Care",
+      description:
+        "Providing personalized support for individuals at risk, helping them avoid unsafe paths, build resilience, and make positive life choices for a brighter future.",
+      color: "text-orange-600",
+      bgColor: "bg-gradient-to-br from-orange-200/20 to-orange-100/5",
+      borderColor: "border-orange-200/20",
+      hoverGradient: "hover:from-orange-300/30 hover:to-orange-200/10",
+    },
+    {
+      icon: School,
+      title: "Skill Development",
+      description:
+        "Equipping children and youth with practical skills, hands-on training, and confidence to succeed academically and socially, building a strong foundation for a better future.",
+      color: "text-teal-600",
+      bgColor: "bg-gradient-to-br from-teal-200/20 to-teal-100/5",
+      borderColor: "border-teal-200/20",
+      hoverGradient: "hover:from-teal-300/30 hover:to-teal-200/10",
+    },
     {
       icon: Star,
       title: "Moral & Value-based Learning",
@@ -101,65 +114,65 @@ const Services = () => {
   return (
     <section
       id="services"
-      className="bg-gradient-to-b from-background via-secondary/20 to-background relative overflow-hidden"
+      className="mt-[-60px] bg-gradient-to-b from-background via-secondary/20 to-background relative overflow-hidden pt-6 pb-10"
     >
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
 
-      <div className="container mx-auto sm:px-6 lg:px-8 relative z-10  overflow-hidden">
-        <div className="text-center mb-20 animate-fade-in">
+      <div className="container mx-auto px-4 relative z-10 overflow-hidden">
+        <div className="text-center mb-14 animate-fade-in">
+
           <div className="inline-block px-4 py-2 bg-primary/10 rounded-full mb-4">
             <span className="text-sm font-semibold text-primary">
               Our Programs
             </span>
           </div>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight">
+
+          <h4 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-4 tracking-tight">
             What We Provide
-          </h2>
-          <div className="w-32 h-1.5 bg-gradient-to-r from-transparent via-brand-gold to-transparent mx-auto rounded-full mb-8"></div>
-           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-      Extending care, protection, guidance, and skill-building support to families, children, and individuals
-      to help them regain confidence, stability, and hope for a brighter future.
-    </p>
+          </h4>
+
+          <div className="w-32 h-1.5 bg-gradient-to-r from-transparent via-brand-gold to-transparent mx-auto rounded-full mb-6"></div>
+
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            Extending care, protection, guidance, and skill-building support to families, children, and individuals
+            to regain confidence and hope for a brighter future.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
           {services.map((service, index) => (
             <Card
               key={index}
-              className={`border-2 ${service.borderColor} shadow-xl hover:shadow-2xl transition-all duration-500 animate-slide-up bg-white/80 backdrop-blur-sm group hover:border-opacity-100 overflow-hidden relative`}
-              style={{ animationDelay: `${index * 0.15}s` }}
+              className={`border-2 ${service.borderColor} shadow-lg hover:shadow-2xl transition-all duration-500 animate-slide-up bg-white/80 backdrop-blur-sm group hover:border-opacity-100 overflow-hidden relative`}
+              style={{ animationDelay: `${index * 0.12}s` }}
             >
               <div
                 className={`absolute inset-0 ${service.bgColor} ${service.hoverGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
               ></div>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
 
               <CardHeader className="relative z-10">
                 <div
-                  className={`w-20 h-20 ${service.bgColor} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg`}
+                  className={`w-16 h-16 ${service.bgColor} rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300 shadow-md`}
                 >
                   <service.icon
-                    className={`h-10 w-10 ${service.color} group-hover:scale-110 transition-transform duration-300`}
+                    className={`h-9 w-9 ${service.color} transition-transform duration-300`}
                   />
                 </div>
-                <CardTitle className="text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+
+                <CardTitle className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
                   {service.title}
                 </CardTitle>
               </CardHeader>
 
               <CardContent className="relative z-10">
-                <p className="text-muted-foreground leading-relaxed mb-6 text-base">
+                <p className="text-muted-foreground leading-relaxed text-base mb-4">
                   {service.description}
                 </p>
-                <button className="flex items-center gap-2 text-primary font-semibold group-hover:gap-4 transition-all duration-300 opacity-0 group-hover:opacity-100">
-                  Learn More
-                  <ArrowUpRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </button>
+             
               </CardContent>
             </Card>
           ))}
         </div>
-        <br></br><br></br>
       </div>
     </section>
   );

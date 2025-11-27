@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+ 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [activeModal, setActiveModal] = useState(null);
-
+ 
   const quickLinks = [
     { path: "/", label: "Home" },
     { path: "/about", label: "About" },
@@ -13,15 +13,15 @@ const Footer = () => {
     { path: "/blog", label: "Blog" },
     { path: "/contact", label: "Contact" }
   ];
-
+ 
   const openLegalModal = (type) => {
     setActiveModal(type);
   };
-
+ 
   const closeLegalModal = () => {
     setActiveModal(null);
   };
-
+ 
   // Social Media Icons as SVG
   const SocialIcons = {
     facebook: (
@@ -50,37 +50,37 @@ const Footer = () => {
       </svg>
     )
   };
-
+ 
   const legalContent = {
     Privacy: {
       title: "Privacy Policy",
       content: `
         <div class="space-y-4">
           <p class="text-gray-700"><strong>Last Updated:</strong> ${currentYear}</p>
-          
+         
           <div>
-            <h4 class="text-lg font-semibold text-blue-800 mb-2">Information We Collect</h4>
+            <h4 class="text-lg font-semibold text-green-800 mb-2">Information We Collect</h4>
             <ul class="list-disc list-inside space-y-1 text-gray-600">
               <li>Personal identification information (Name, email address, phone number)</li>
-              <li>Business information and trade requirements</li>
+              <li>Donation history and preferences</li>
               <li>Communication history and inquiries</li>
-              <li>Site usage data and analytics</li>
+              <li>Volunteer information and interests</li>
             </ul>
           </div>
-
+ 
           <div>
-            <h4 class="text-lg font-semibold text-blue-800 mb-2">How We Use Your Information</h4>
+            <h4 class="text-lg font-semibold text-green-800 mb-2">How We Use Your Information</h4>
             <ul class="list-disc list-inside space-y-1 text-gray-600">
-              <li>Provide personalized trading solutions and recommendations</li>
-              <li>Process your inquiries and service requests</li>
-              <li>Send relevant market updates and trade insights</li>
-              <li>Improve our services and customer experience</li>
+              <li>Process donations and maintain records</li>
+              <li>Coordinate volunteer activities</li>
+              <li>Send updates about our programs and initiatives</li>
+              <li>Improve our services and community outreach</li>
             </ul>
           </div>
-
+ 
           <div>
-            <h4 class="text-lg font-semibold text-blue-800 mb-2">Data Protection</h4>
-            <p class="text-gray-600">We implement security measures to protect your personal information and maintain confidentiality in all trade transactions.</p>
+            <h4 class="text-lg font-semibold text-green-800 mb-2">Data Protection</h4>
+            <p class="text-gray-600">We implement security measures to protect your personal information and maintain confidentiality in all trust activities.</p>
           </div>
         </div>
       `
@@ -90,29 +90,30 @@ const Footer = () => {
       content: `
         <div class="space-y-4">
           <p class="text-gray-700"><strong>Effective Date:</strong> ${currentYear}</p>
-          
+         
           <div>
-            <h4 class="text-lg font-semibold text-blue-800 mb-2">Product Information</h4>
+            <h4 class="text-lg font-semibold text-green-800 mb-2">Donation Policy</h4>
             <ul class="list-disc list-inside space-y-1 text-gray-600">
-              <li>All product details, prices, and specifications are subject to change without prior notice</li>
-              <li>Images and descriptions are for representation purposes only</li>
-              <li>Actual products may vary from displayed information</li>
+              <li>All donations are voluntary and non-refundable</li>
+              <li>Funds are utilized for charitable activities as per trust objectives</li>
+              <li>Donation receipts are provided for all contributions</li>
+              <li>Transparency in fund utilization is maintained</li>
             </ul>
           </div>
-
+ 
           <div>
-            <h4 class="text-lg font-semibold text-blue-800 mb-2">Orders & Transactions</h4>
+            <h4 class="text-lg font-semibold text-green-800 mb-2">Volunteer Guidelines</h4>
             <ul class="list-disc list-inside space-y-1 text-gray-600">
-              <li>Orders are subject to product availability and supplier confirmation</li>
-              <li>All transactions must comply with international trade regulations</li>
-              <li>Payment terms are subject to company approval and credit verification</li>
-              <li>Shipping and delivery timelines are estimates and may vary</li>
+              <li>Volunteers must adhere to trust code of conduct</li>
+              <li>Respect and confidentiality towards beneficiaries is mandatory</li>
+              <li>Timely commitment to assigned activities is expected</li>
+              <li>Background verification may be required for certain activities</li>
             </ul>
           </div>
-
+ 
           <div>
-            <h4 class="text-lg font-semibold text-blue-800 mb-2">Legal Compliance</h4>
-            <p class="text-gray-600">All trade transactions are governed by applicable international trade laws and customs regulations. Clients are advised to verify all documentation before proceeding.</p>
+            <h4 class="text-lg font-semibold text-green-800 mb-2">Legal Compliance</h4>
+            <p class="text-gray-600">All trust activities are governed by applicable laws and regulations. We maintain proper documentation and transparency in all operations.</p>
           </div>
         </div>
       `
@@ -122,188 +123,175 @@ const Footer = () => {
       content: `
         <div class="space-y-4">
           <div>
-            <h4 class="text-lg font-semibold text-blue-800 mb-2">Information Accuracy</h4>
-            <p class="text-gray-600">While we strive to provide accurate and up-to-date information about products and trading services, we cannot guarantee the completeness or accuracy of all content. Clients should:</p>
+            <h4 class="text-lg font-semibold text-green-800 mb-2">Information Accuracy</h4>
+            <p class="text-gray-600">While we strive to provide accurate and up-to-date information about our programs and activities, we cannot guarantee the completeness or accuracy of all content. Visitors should:</p>
             <ul class="list-disc list-inside space-y-1 text-gray-600 mt-2">
-              <li>Verify all product details and specifications</li>
-              <li>Check original documentation and certifications</li>
-              <li>Consult trade advisors before transactions</li>
-              <li>Review samples when available</li>
+              <li>Verify program details before participation</li>
+              <li>Contact trust representatives for specific queries</li>
+              <li>Check official communications for updates</li>
             </ul>
           </div>
-
+ 
           <div>
-            <h4 class="text-lg font-semibold text-blue-800 mb-2">Trade Risks</h4>
-            <p class="text-gray-600">International trade involves various risks including currency fluctuations, regulatory changes, and market volatility. Clients should make independent decisions based on their risk assessment.</p>
-          </div>
-
-          <div>
-            <h4 class="text-lg font-semibold text-blue-800 mb-2">Third-Party Links</h4>
+            <h4 class="text-lg font-semibold text-green-800 mb-2">External Links</h4>
             <p class="text-gray-600">Our website may contain links to third-party sites. We are not responsible for the content or privacy practices of these external sites.</p>
+          </div>
+ 
+          <div>
+            <h4 class="text-lg font-semibold text-green-800 mb-2">Program Variations</h4>
+            <p class="text-gray-600">Program schedules, activities, and beneficiary details may change based on community needs and resource availability.</p>
           </div>
         </div>
       `
     }
   };
-
+ 
   return (
     <>
-      <footer className="bg-gradient-to-b from-blue-900 to-[blue] text-white">
-        <div className="container mx-auto px-6">
-          
-          {/* Main Footer Content */}
-          <div className="py-8">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 lg:gap-6 mb-6">
-              
-              {/* Company Info */}
-              <div className="text-left md:col-span-4">
-                <div className="flex items-center space-x-3 mb-4">
-                  {/* Founder Image and Logo */}
-                  <div className="flex items-center space-x-2 flex-shrink-0">
-                    <div className="w-16 h-16 rounded-full border-2 border-orange-200 overflow-hidden shadow-lg">
-                      <img
-                        src="/images/image.png"
-                        alt="Founder"
-                        className="w-full h-full object-cover object-top"
-                      />
-                    </div>
-                    <div className="w-14 h-14">
-                      <img
-                        src="/images/Anandhlogo.png"
-                        alt="Anand Imports & Exports"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                  </div>
-                  {/* Text immediately to the side */}
-                  <div className="flex flex-col">
-                    <h2 className="text-xl md:text-2xl font-bold">
-                      <span className="text-orange-400">ANAND</span> 
-                      <span className="text-white"> SEVA TRUST</span>
-                    </h2>
-                    <p className="text-orange-200 text-xs md:text-sm italic">"Connecting Markets. Delivering Excellence."</p>
-                  </div>
-                </div>
-
-                <div className="text-left">
-                  <p className="text-gray-300 mb-3 text-sm leading-relaxed">
-                    A spiritual and social welfare trust devoted to serving humanity with compassion and devotion.
-                  </p>
-                  <p className="text-gray-300 mb-3 text-sm leading-relaxed">
-                    We work to provide support, guidance, and welfare services that enrich lives and strengthen communities, ensuring trust, transparency, and care in every initiative.
-                    
-                  </p>
-                </div>
+ <footer
+  className="text-white"
+  style={{ background: "linear-gradient(135deg, #1e3c72, #2a5298)" }}
+>
+  <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+ 
+    {/* Main Footer Content */}
+    <div className="py-10">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6">
+ 
+        {/* Company Info */}
+        <div className="lg:col-span-4 text-left">
+          <div className="flex items-start space-x-4 mb-6">
+ 
+            {/* Images */}
+            <div className="flex items-center space-x-3 flex-shrink-0">
+              <div className="w-16 h-16 rounded-full border-2 border-white/30 overflow-hidden shadow-lg">
+                <img src="/images/image.png" alt="Founder" className="w-full h-full object-cover object-top" />
               </div>
-
-              {/* Quick Links */}
-              <div className="text-left md:col-span-2 md:pl-6">
-                <h3 className="text-lg font-semibold mb-3 text-orange-400">Quick Links</h3>
-                <div className="space-y-2">
-                  {quickLinks.map((link, index) => (
-                    <Link
-                      key={index}
-                      to={link.path}
-                      className="block text-gray-300 py-1 text-sm hover:text-orange-400 transition-all duration-200"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* Contact Info */}
-              <div className="text-left md:col-span-3 md:pl-4">
-                <h3 className="text-lg font-semibold mb-3 text-orange-400">Contact</h3>
-                <div className="space-y-3 text-sm">
-                  <div className="flex flex-col items-start space-y-2">
-                    <div className="flex items-start space-x-2">
-                      <i className="fas fa-map-marker-alt text-orange-400 mt-1 text-sm" />
-                      <span className="text-gray-300 text-left">
-                        Hiko, 131/A, 2nd Floor<br />
-                        Banjara Hills, Hyderabad<br />
-                        Telangana - 500034
-                      </span>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <i className="fas fa-phone text-orange-400 text-sm" />
-                      <span className="text-gray-300">+91 1800 123 4857</span>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <i className="fas fa-envelope text-orange-400 text-sm" />
-                      <span className="text-gray-300">info@anandsevatrust.com</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Follow Us Section */}
-              <div className="text-left md:col-span-3 md:pl-4">
-                <h3 className="text-lg font-semibold mb-3 text-orange-400">Follow Us</h3>
-                <div className="flex flex-wrap gap-3">
-                  {[
-                    { name: "facebook", url: "#", color: "hover:bg-blue-600" },
-                    { name: "twitter", url: "#", color: "hover:bg-blue-400" },
-                    { name: "instagram", url: "#", color: "hover:bg-pink-600" },
-                    { name: "youtube", url: "#", color: "hover:bg-red-600" },
-                    { name: "linkedin", url: "#", color: "hover:bg-blue-800" }
-                  ].map((social, i) => (
-                    <a
-                      key={i}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center text-white transition-all duration-300 hover:scale-110 ${social.color}`}
-                      title={social.name.charAt(0).toUpperCase() + social.name.slice(1)}
-                    >
-                      {SocialIcons[social.name]}
-                    </a>
-                  ))}
-                </div>
+              <div className="w-14 h-14">
+                <img src="/images/Anandhlogo.png" alt="Anand Seva Trust" className="w-full h-full object-contain" />
               </div>
             </div>
+ 
+        {/* Title */}
+<div className="flex flex-col">
+  <h2 className="text-xl md:text-2xl font-bold whitespace-nowrap">
+    <span className="text-orange-500">ANAND</span>{" "}
+    <span className="text-white-900">SEVA TRUST</span>
+  </h2>
+              <p className="text-gray-300 text-sm italic mt-1">
+                "Serving Humanity with Compassion"
+              </p>
+            </div>
           </div>
-
-          {/* Bottom Section */}
-          <div className="border-t border-white/10 pt-4 pb-4">
-            <div className="flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0">
-              
-              {/* Copyright */}
-              <div className="text-center md:text-left">
-                <p className="text-gray-400 text-sm">
-                  © {currentYear} <span className="text-orange-400 font-semibold">Anand Seva Trust</span>. All rights reserved.
-                </p>
-              </div>
-
-              {/* Legal Links */}
-              <div className="flex flex-wrap justify-center gap-4">
-                {["Privacy", "Terms", "Disclaimer"].map((item) => (
-                  <button
-                    key={item}
-                    onClick={() => openLegalModal(item)}
-                    className="text-gray-500 hover:text-orange-400 transition-colors text-sm font-medium hover:underline"
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-
-              {/* Developer Credit */}
-              <div className="text-center md:text-right">
-                <p className="text-gray-500 text-sm">
-                  Designed by{" "}
-                  <Link to="https://designcareermetrics.com" className="text-orange-400 hover:underline font-medium">
-                    Design Career Metrics
-                  </Link>
-                </p>
-              </div>
+ 
+          <p className="text-gray-300 mb-4 text-sm leading-relaxed">
+            A spiritual and social welfare trust devoted to serving humanity with compassion and devotion.
+          </p>
+ 
+          <p className="text-gray-300 text-sm leading-relaxed">
+            We work to provide support, guidance, and welfare services that enrich lives and strengthen communities.
+          </p>
+        </div>
+ 
+        {/* Quick Links */}
+        <div className="lg:col-span-2 text-left">
+          <h3 className="text-lg font-semibold mb-4 text-white">Quick Links</h3>
+          <div className="space-y-3">
+            {quickLinks.map((link, index) => (
+              <Link
+                key={index}
+                to={link.path}
+                className="block text-gray-300 py-1 text-sm hover:text-white transition-all duration-200"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+ 
+        {/* Contact Info */}
+        <div className="lg:col-span-3 text-left">
+          <h3 className="text-lg font-semibold mb-4 text-white">Contact</h3>
+          <div className="space-y-4 text-sm">
+            <div className="flex items-start space-x-3">
+              <i className="fas fa-map-marker-alt text-white" />
+              <span className="text-gray-300">
+                Hiko, 131/A, 2nd Floor<br />
+                Banjara Hills, Hyderabad<br />
+                Telangana - 500034
+              </span>
+            </div>
+ 
+            <div className="flex items-center space-x-3">
+              <i className="fas fa-phone text-white" />
+              <span className="text-gray-300">+91 1800 123 4857</span>
+            </div>
+ 
+            <div className="flex items-center space-x-3">
+              <i className="fas fa-envelope text-white" />
+              <span className="text-gray-300">info@anandsevatrust.com</span>
             </div>
           </div>
         </div>
-      </footer>
-
+ 
+        {/* Follow Us */}
+        <div className="lg:col-span-3 text-left">
+          <h3 className="text-lg font-semibold mb-4 text-white">Follow Us</h3>
+          <div className="flex flex-wrap gap-3">
+            <a href="#" className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white text-xl shadow-lg hover:scale-110 hover:shadow-blue-500/50 transition-all">
+              <i className="fab fa-facebook-f" />
+            </a>
+            <a href="#" className="w-10 h-10 bg-sky-500 rounded-lg flex items-center justify-center text-white text-xl shadow-lg hover:scale-110 hover:shadow-sky-500/50 transition-all">
+              <i className="fab fa-twitter" />
+            </a>
+            <a href="#" className="w-10 h-10 bg-gradient-to-tr from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white text-xl shadow-lg hover:scale-110 hover:shadow-pink-500/50 transition-all">
+              <i className="fab fa-instagram" />
+            </a>
+            <a href="#" className="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center text-white text-xl shadow-lg hover:scale-110 hover:shadow-red-500/50 transition-all">
+              <i className="fab fa-youtube" />
+            </a>
+            <a href="#" className="w-10 h-10 bg-blue-700 rounded-lg flex items-center justify-center text-white text-xl shadow-lg hover:scale-110 hover:shadow-blue-600/50 transition-all">
+              <i className="fab fa-linkedin-in" />
+            </a>
+          </div>
+        </div>
+ 
+      </div>
+    </div>
+ 
+    {/* Bottom Footer */}
+    <div className="border-t border-white/20 pt-6 pb-6">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center space-y-4 lg:space-y-0">
+        <p className="text-gray-300 text-sm">
+          © {currentYear} <span className="text-white font-semibold">Anand Seva Trust</span>. All rights reserved.
+        </p>
+ 
+        <div className="flex gap-4">
+          {["Privacy", "Terms", "Disclaimer"].map((item) => (
+            <button
+              key={item}
+              onClick={() => openLegalModal(item)}
+              className="text-gray-300 hover:text-white transition-colors text-sm font-medium hover:underline"
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+ 
+        <p className="text-gray-300 text-sm">
+          Designed by{" "}
+          <Link to="https://designcareermetrics.com" className="text-white hover:underline font-medium">
+            Design Career Metrics
+          </Link>
+        </p>
+      </div>
+    </div>
+ 
+  </div>
+</footer>
+ 
+ 
+ 
       {/* Legal Modals */}
       {activeModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -320,16 +308,16 @@ const Footer = () => {
                   ×
                 </button>
               </div>
-              
-              <div 
+             
+              <div
                 className="prose prose-lg max-w-none"
                 dangerouslySetInnerHTML={{ __html: legalContent[activeModal]?.content }}
               />
-              
+             
               <div className="flex justify-end mt-6">
                 <button
                   onClick={closeLegalModal}
-                  className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors duration-200"
+                  className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200"
                 >
                   Close
                 </button>
@@ -341,5 +329,5 @@ const Footer = () => {
     </>
   );
 };
-
+ 
 export default Footer;
