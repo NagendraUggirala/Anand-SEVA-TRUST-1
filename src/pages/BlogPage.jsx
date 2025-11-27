@@ -300,38 +300,36 @@ const BlogPage = () => {
       minHeight: '100vh'
     }}>
       {/* Mobile Header */}
-      {windowWidth < 1024 && !selectedPost && (
-        <div style={{
-          background: 'white',
-          padding: '15px 20px',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-          position: 'sticky',
-          top: 0,
-          zIndex: 1000,
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }}>
-          <button 
-            onClick={toggleMobileMenu}
-            style={{
-              background: '#667eea',
-              color: 'white',
-              border: 'none',
-              padding: '10px 15px',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px'
-            }}
-          >
-            {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
-            Menu
-          </button>
-          <h3 style={{ margin: 0, color: '#333' }}>Anand Seva Trust</h3>
-        </div>
-      )}
+   {windowWidth < 1024 && !selectedPost && (
+  <div style={{
+    background: 'white',
+    padding: '15px 20px',
+    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  }}>
+    <button 
+      onClick={toggleMobileMenu}
+      style={{
+        background: '#667eea',
+        color: 'white',
+        border: 'none',
+        padding: '10px 15px',
+        borderRadius: '8px',
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px'
+      }}
+    >
+      {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+      Menu
+    </button>
+    <h3 style={{ margin: 0, color: '#333' }}>Anand Seva Trust</h3>
+  </div>
+)}
+
 
       {/* Full Width Banner */}
       <div style={{
