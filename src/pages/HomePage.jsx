@@ -4,6 +4,7 @@ import { Heart, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 /* WORKFLOW STEPS */
 const steps = [
@@ -171,13 +172,13 @@ const HomePage = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button
-                  size="lg"
-                  onClick={() => navigate("/contact")}
-                  className="bg-white text-blue-600 hover:bg-blue-50 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-lg flex items-center justify-center"
-                >
-                  Get Help Today <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
+              <Button
+  size="lg"
+  onClick={() => navigate("/contact")}
+  className="bg-white text-blue-600 hover:bg-blue-50 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-lg flex items-center justify-center"
+>
+  Get Help Today <ArrowRight className="ml-2 h-5 w-5" />
+</Button>
               </div>
             </div>
           </div>
@@ -221,10 +222,13 @@ const HomePage = () => {
             <p className="text-gray-600 text-base sm:text-lg mb-8">
               We help families and children facing difficulties with care, education and support.
             </p>
+      <button 
+        onClick={() => navigate('/about')}
+        className="bg-orange-600 text-white px-5 sm:px-7 py-2 sm:py-3 rounded-full font-semibold text-base sm:text-lg hover:bg-orange-700 transition flex items-center gap-2"
+      >
+        Explore More →
+      </button>
 
-            <button className="bg-orange-600 text-white px-5 sm:px-7 py-2 sm:py-3 rounded-full font-semibold text-base sm:text-lg hover:bg-orange-700 transition flex items-center gap-2">
-              Explore More →
-            </button>
           </div>
         </div>
       </section>
@@ -233,34 +237,45 @@ const HomePage = () => {
       <section className="flex justify-center px-4 sm:px-6 md:px-8 py-10 sm:py-20">
         <div className="w-full max-w-[1200px] flex flex-col lg:flex-row gap-6 lg:gap-12 bg-red-600 rounded-2xl p-6 sm:p-10 text-white">
 
-          {/* LEFT DONATE BOX */}
-          <div className="w-full lg:w-1/2 bg-[url('https://themeshub.net/demo-charitics/assets/images/hero/hero-dark.jpg')] bg-cover bg-center rounded-2xl p-6 sm:p-8 min-h-[280px]">
-            <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Custome Donate Now</h2>
+         {/* LEFT DONATE BOX */}
+<div className="w-full lg:w-1/2 bg-[url('https://themeshub.net/demo-charitics/assets/images/hero/hero-dark.jpg')] bg-cover bg-center rounded-2xl p-6 sm:p-8 min-h-[280px]">
+  <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Custome Donate Now</h2>
 
-            <div className="flex flex-wrap gap-2 sm:gap-3 mb-4">
-              {["10", "20", "30", "40", "50"].map((amt, i) => (
-                <button
-                  key={i}
-                  className={`px-3 sm:px-4 py-1 sm:py-2 rounded-full font-semibold border-none cursor-pointer ${
-                    i === 0 ? "bg-orange-500 text-white" : "bg-white text-black"
-                  }`}
-                >
-                  {amt}
-                </button>
-              ))}
-            </div>
+  <div className="flex flex-wrap gap-2 sm:gap-3 mb-4">
+    {["500", "1000", "1500", "2000", "2500"].map((amt, i) => (
+      <button
+        key={i}
+        onClick={() => {
+          // Set the clicked amount to the input field
+          const input = document.getElementById('donation-amount');
+          if (input) {
+            input.value = amt;
+          }
+        }}
+        className={`px-3 sm:px-4 py-1 sm:py-2 rounded-full font-semibold border-none cursor-pointer ${
+          i === 0 ? "bg-orange-500 text-white" : "bg-white text-black"
+        }`}
+      >
+        {amt}
+      </button>
+    ))}
+  </div>
 
-            <div className="flex gap-2 sm:gap-3">
-              <input
-                type="number"
-                placeholder="10"
-                className="flex-1 p-2 sm:p-3 rounded-full border-none"
-              />
-              <button className="px-4 sm:px-6 py-2 sm:py-3 bg-orange-500 text-white font-bold rounded-full">
-                Donate Now
-              </button>
-            </div>
-          </div>
+  <div className="flex gap-2 sm:gap-3">
+    <input
+      id="donation-amount"
+      type="number"
+      placeholder="10"
+      className="flex-1 p-2 sm:p-3 rounded-full border-none"
+    />
+    <button 
+      onClick={() => window.location.href = '/industries'}
+      className="px-4 sm:px-6 py-2 sm:py-3 bg-orange-500 text-white font-bold rounded-full hover:bg-orange-600 transition"
+    >
+      Donate Now
+    </button>
+  </div>
+</div>
 
           {/* RIGHT */}
           <div className="w-full lg:w-1/2 p-4 sm:p-6 flex flex-col justify-center">
@@ -313,11 +328,13 @@ const HomePage = () => {
           <div className="text-center mb-8 sm:mb-12">
             <h5 className="text-red-500 font-semibold">Upcoming Events</h5>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mt-2 text-gray-800">
-              Charitics Information Of Event Schedule
-            </h2>
-            <button className="mt-3 sm:mt-4 px-4 sm:px-6 py-2 bg-red-500 text-white rounded-lg flex items-center gap-2 mx-auto hover:bg-red-600 transition-colors">
-              Explore More <ArrowRight size={18} />
-            </button>
+              Charitics Information Of Event Schedule</h2>
+          <button 
+      onClick={() => navigate('/blog')}
+      className="mt-3 sm:mt-4 px-4 sm:px-6 py-2 bg-red-500 text-white rounded-lg flex items-center gap-2 mx-auto hover:bg-red-600 transition-colors"
+    >
+      Explore More <ArrowRight size={18} />
+    </button>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
@@ -460,7 +477,7 @@ const HomePage = () => {
       </section>
 
       {/* ============ WORKFLOW SECTION ============ */}
-      <section className="bg-gradient-to-br from-blue-400 via-blue-500 to-indigo-600 py-16 sm:py-20 px-4 sm:px-6 md:px-8">
+      <section className="bg-[#52606D] py-16 sm:py-20 px-4 sm:px-6 md:px-8">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl md:text-4xl text-white font-semibold mb-2 sm:mb-4">
             Anand Seva Trust
@@ -514,3 +531,19 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

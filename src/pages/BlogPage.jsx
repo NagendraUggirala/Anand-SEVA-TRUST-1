@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaFacebookF, FaTwitter, FaWhatsapp, FaLinkedinIn, FaHeart, FaRegHeart, FaBookmark, FaRegBookmark, FaShare, FaArrowLeft, FaClock, FaUser, FaCalendar, FaEye } from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaWhatsapp, FaLinkedinIn, FaHeart, FaRegHeart, FaBookmark, FaRegBookmark, FaShare, FaArrowLeft, FaClock, FaUser, FaCalendar, FaEye, FaBars, FaTimes } from "react-icons/fa";
 
 const BlogPage = () => {
   const [blogPosts, setBlogPosts] = useState([]);
@@ -12,6 +12,20 @@ const BlogPage = () => {
   const [newComment, setNewComment] = useState('');
   const [viewCount, setViewCount] = useState({});
   const [relatedPosts, setRelatedPosts] = useState([]);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+      if (window.innerWidth > 768) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const blogPageStyle = {
     width: '100%',
@@ -25,14 +39,15 @@ const BlogPage = () => {
     maxWidth: '1200px',
     margin: '0 auto',
     padding: '0 20px',
-    display: 'grid',
-    gridTemplateColumns: '300px 1fr',
+    display: windowWidth > 1024 ? 'grid' : 'block',
+    gridTemplateColumns: windowWidth > 1024 ? '300px 1fr' : '1fr',
     gap: '30px',
     alignItems: 'start'
   };
 
-  // Sample blog data with your original image URLs
-   const samplePosts = [
+  // Sample blog data (same as before)
+  const samplePosts = [
+    // ... (same sample posts data as before)
     {
       id: 1,
       title: "Anand Seva Trust - Our Mission & Vision",
@@ -146,7 +161,6 @@ const BlogPage = () => {
 
   useEffect(() => {
     setBlogPosts(samplePosts);
-    // Initialize comments for each post
     const initialComments = {};
     const initialViewCount = {};
     samplePosts.forEach(post => {
@@ -161,20 +175,24 @@ const BlogPage = () => {
     setViewCount(initialViewCount);
   }, []);
 
+  // Mobile sidebar toggle
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   const handlePostClick = (post) => {
     setSelectedPost(post);
-    // Increment view count
     setViewCount(prev => ({
       ...prev,
       [post.id]: (prev[post.id] || 0) + 1
     }));
     
-    // Find related posts
     const related = samplePosts
       .filter(p => p.id !== post.id && p.category === post.category)
       .slice(0, 3);
     setRelatedPosts(related);
     
+    setIsMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -185,8 +203,10 @@ const BlogPage = () => {
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
+    setIsMobileMenuOpen(false);
   };
 
+  // ... (other handler functions remain the same)
   const handleLikeClick = (postId) => {
     setLikedPosts(prev => ({
       ...prev,
@@ -274,34 +294,81 @@ const BlogPage = () => {
 
   const categories = ['All Posts', 'About Us', 'Events', 'Programs', 'Healthcare', 'Success Stories', 'Volunteer Stories'];
 
+  // Responsive grid columns
+  const getGridColumns = () => {
+    if (windowWidth < 640) return '1fr';
+    if (windowWidth < 1024) return 'repeat(auto-fit, minmax(350px, 1fr))';
+    return 'repeat(auto-fit, minmax(380px, 1fr))';
+  };
+
   return (
     <div style={blogPageStyle}>
+      {/* Mobile Header */}
+      {windowWidth < 1024 && !selectedPost && (
+        <div style={{
+          background: 'white',
+          padding: '15px 20px',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+          position: 'sticky',
+          top: 0,
+          zIndex: 1000,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+          <button 
+            onClick={toggleMobileMenu}
+            style={{
+              background: '#667eea',
+              color: 'white',
+              border: 'none',
+              padding: '10px 15px',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}
+          >
+            {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+            Menu
+          </button>
+          <h3 style={{ margin: 0, color: '#333' }}>Anand Seva Trust</h3>
+        </div>
+      )}
+
       {/* Full Width Banner */}
       <div style={{
         background: "linear-gradient(135deg, #1e3c72, #2a5298)", 
         color: "white",
-        padding: "80px 20px",
+        padding: windowWidth < 768 ? "60px 20px" : "80px 20px",
         textAlign: "center",
       }}>
         <h1 style={{ 
           margin: '0', 
-          fontSize: '3.5rem', 
+          fontSize: windowWidth < 768 ? '2.5rem' : windowWidth < 1024 ? '3rem' : '3.5rem', 
           fontWeight: '700', 
           marginBottom: '15px',
-          textShadow: '2px 2px 6px rgba(0,0,0,0.4)'
+          textShadow: '2px 2px 6px rgba(0,0,0,0.4)',
+          lineHeight: '1.2'
         }}>
           Anand Seva Trust 
         </h1>
         <p style={{ 
-          fontSize: '1.5rem', 
+          fontSize: windowWidth < 768 ? '1.2rem' : '1.5rem', 
           margin: '0', 
           opacity: '0.95', 
           marginBottom: '35px',
-          fontWeight: '300'
+          fontWeight: '300',
+          padding: '0 10px'
         }}>
           Sharing Stories of Care, Service & Community Support
         </p>
-        <div style={{ maxWidth: '400px', margin: '0 auto' }}>
+        <div style={{ 
+          maxWidth: '400px', 
+          margin: '0 auto',
+          padding: '0 20px'
+        }}>
           <input
             type="text"
             placeholder="Search blog posts..."
@@ -309,7 +376,7 @@ const BlogPage = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
               width: '100%',
-              padding: '10px 20px',
+              padding: '12px 20px',
               borderRadius: '25px',
               border: 'none',
               fontSize: '16px',
@@ -318,10 +385,14 @@ const BlogPage = () => {
             }}
           />
         </div>
-      </div><br></br>
+      </div>
 
       {selectedPost ? (
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
+        <div style={{ 
+          maxWidth: '1200px', 
+          margin: '0 auto', 
+          padding: windowWidth < 768 ? '0 15px' : '0 20px' 
+        }}>
           <BlogPostDetail 
             post={selectedPost} 
             onBack={handleBackToList}
@@ -340,6 +411,7 @@ const BlogPage = () => {
             viewCount={viewCount[selectedPost.id] || selectedPost.views}
             relatedPosts={relatedPosts}
             onPostClick={handlePostClick}
+            windowWidth={windowWidth}
           />
         </div>
       ) : (
@@ -347,12 +419,15 @@ const BlogPage = () => {
           {/* Sidebar */}
           <div style={{
             background: 'white',
-            padding: '25px',
+            padding: windowWidth < 768 ? '20px' : '25px',
             borderRadius: '12px',
-            height: 'fit-content',
+            height: windowWidth > 1024 ? 'fit-content' : 'auto',
             boxShadow: '0 5px 15px rgba(0,0,0,0.08)',
-            position: 'sticky',
-            top: '20px'
+            position: windowWidth > 1024 ? 'sticky' : 'static',
+            top: windowWidth > 1024 ? '20px' : 'auto',
+            display: windowWidth < 1024 ? (isMobileMenuOpen ? 'block' : 'none') : 'block',
+            marginBottom: windowWidth < 1024 ? '20px' : '0',
+            zIndex: 999
           }}>
             <div style={{ marginBottom: '30px' }}>
               <h3 style={{ 
@@ -360,7 +435,7 @@ const BlogPage = () => {
                 borderBottom: '3px solid #667eea', 
                 paddingBottom: '12px',
                 marginBottom: '20px',
-                fontSize: '1.4rem'
+                fontSize: windowWidth < 768 ? '1.2rem' : '1.4rem'
               }}>
                 📂 Categories
               </h3>
@@ -377,7 +452,8 @@ const BlogPage = () => {
                       cursor: 'pointer',
                       transition: 'all 0.3s ease',
                       border: '1px solid #e9ecef',
-                      fontWeight: selectedCategory === category ? '600' : '400'
+                      fontWeight: selectedCategory === category ? '600' : '400',
+                      fontSize: windowWidth < 768 ? '14px' : '16px'
                     }}
                     onClick={() => handleCategoryClick(category)}
                   >
@@ -394,7 +470,7 @@ const BlogPage = () => {
                 borderBottom: '3px solid #ffc107', 
                 paddingBottom: '12px',
                 marginBottom: '15px',
-                fontSize: '1.4rem'
+                fontSize: windowWidth < 768 ? '1.2rem' : '1.4rem'
               }}>
                 🔥 Recent Posts
               </h3>
@@ -420,10 +496,19 @@ const BlogPage = () => {
                   }}
                   onClick={() => handlePostClick(post)}
                 >
-                  <h4 style={{ margin: '0 0 5px 0', fontSize: '14px', lineHeight: '1.4' }}>
+                  <h4 style={{ 
+                    margin: '0 0 5px 0', 
+                    fontSize: windowWidth < 768 ? '13px' : '14px', 
+                    lineHeight: '1.4' 
+                  }}>
                     {post.title}
                   </h4>
-                  <span style={{ fontSize: '12px', opacity: '0.7' }}>{post.date}</span>
+                  <span style={{ 
+                    fontSize: windowWidth < 768 ? '11px' : '12px', 
+                    opacity: '0.7' 
+                  }}>
+                    {post.date}
+                  </span>
                 </div>
               ))}
             </div>
@@ -433,8 +518,8 @@ const BlogPage = () => {
           <div>
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
-              gap: '25px'
+              gridTemplateColumns: getGridColumns(),
+              gap: windowWidth < 768 ? '20px' : '25px'
             }}>
               {filteredPosts.map(post => (
                 <BlogPostCard 
@@ -446,6 +531,7 @@ const BlogPage = () => {
                   liked={likedPosts[post.id] || false}
                   bookmarked={bookmarkedPosts[post.id] || false}
                   viewCount={viewCount[post.id] || post.views}
+                  windowWidth={windowWidth}
                 />
               ))}
             </div>
@@ -453,10 +539,11 @@ const BlogPage = () => {
             {filteredPosts.length === 0 && (
               <div style={{
                 textAlign: 'center',
-                padding: '60px 20px',
+                padding: windowWidth < 768 ? '40px 20px' : '60px 20px',
                 background: 'white',
                 borderRadius: '12px',
-                boxShadow: '0 5px 15px rgba(0,0,0,0.08)'
+                boxShadow: '0 5px 15px rgba(0,0,0,0.08)',
+                marginTop: '20px'
               }}>
                 <h3 style={{ color: '#666', marginBottom: '10px' }}>No posts found</h3>
                 <p style={{ color: '#888' }}>Try changing your search or category filter</p>
@@ -469,8 +556,8 @@ const BlogPage = () => {
   );
 };
 
-// Blog Post Card Component
-const BlogPostCard = ({ post, onClick, onLike, onBookmark, liked, bookmarked, viewCount }) => {
+// Blog Post Card Component - Updated for responsiveness
+const BlogPostCard = ({ post, onClick, onLike, onBookmark, liked, bookmarked, viewCount, windowWidth }) => {
   return (
     <div 
       style={{
@@ -483,18 +570,22 @@ const BlogPostCard = ({ post, onClick, onLike, onBookmark, liked, bookmarked, vi
         border: '1px solid #e9ecef'
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'translateY(-8px)';
-        e.currentTarget.style.boxShadow = '0 15px 35px rgba(0,0,0,0.15)';
+        if (windowWidth > 768) {
+          e.currentTarget.style.transform = 'translateY(-8px)';
+          e.currentTarget.style.boxShadow = '0 15px 35px rgba(0,0,0,0.15)';
+        }
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'translateY(0)';
-        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.1)';
+        if (windowWidth > 768) {
+          e.currentTarget.style.transform = 'translateY(0)';
+          e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.1)';
+        }
       }}
       onClick={() => onClick(post)}
     >
       <div style={{
         position: 'relative',
-        height: '220px',
+        height: windowWidth < 768 ? '180px' : '220px',
         background: `url(${post.image}) center/cover no-repeat`,
         display: 'flex',
         alignItems: 'flex-end',
@@ -517,7 +608,7 @@ const BlogPostCard = ({ post, onClick, onLike, onBookmark, liked, bookmarked, vi
           color: 'white',
           padding: '6px 15px',
           borderRadius: '20px',
-          fontSize: '12px',
+          fontSize: windowWidth < 768 ? '10px' : '12px',
           fontWeight: '600'
         }}>
           {post.category}
@@ -532,10 +623,10 @@ const BlogPostCard = ({ post, onClick, onLike, onBookmark, liked, bookmarked, vi
               background: 'rgba(255,255,255,0.9)',
               border: 'none',
               borderRadius: '50%',
-              width: '40px',
-              height: '40px',
+              width: windowWidth < 768 ? '35px' : '40px',
+              height: windowWidth < 768 ? '35px' : '40px',
               cursor: 'pointer',
-              fontSize: '16px',
+              fontSize: windowWidth < 768 ? '14px' : '16px',
               color: liked ? '#ff4757' : '#666',
               display: 'flex',
               alignItems: 'center',
@@ -554,10 +645,10 @@ const BlogPostCard = ({ post, onClick, onLike, onBookmark, liked, bookmarked, vi
               background: 'rgba(255,255,255,0.9)',
               border: 'none',
               borderRadius: '50%',
-              width: '40px',
-              height: '40px',
+              width: windowWidth < 768 ? '35px' : '40px',
+              height: windowWidth < 768 ? '35px' : '40px',
               cursor: 'pointer',
-              fontSize: '16px',
+              fontSize: windowWidth < 768 ? '14px' : '16px',
               color: bookmarked ? '#ffd700' : '#666',
               display: 'flex',
               alignItems: 'center',
@@ -570,13 +661,13 @@ const BlogPostCard = ({ post, onClick, onLike, onBookmark, liked, bookmarked, vi
         </div>
       </div>
       
-      <div style={{ padding: '20px' }}>
+      <div style={{ padding: windowWidth < 768 ? '15px' : '20px' }}>
         <h3 style={{ 
           margin: '0 0 12px 0', 
           color: '#333',
-          fontSize: '1.4rem',
+          fontSize: windowWidth < 768 ? '1.2rem' : '1.4rem',
           lineHeight: '1.4',
-          minHeight: '68px'
+          minHeight: windowWidth < 768 ? '60px' : '68px'
         }}>
           {post.title}
         </h3>
@@ -585,56 +676,59 @@ const BlogPostCard = ({ post, onClick, onLike, onBookmark, liked, bookmarked, vi
           color: '#666',
           lineHeight: '1.6',
           marginBottom: '15px',
-          fontSize: '14px',
+          fontSize: windowWidth < 768 ? '13px' : '14px',
           display: '-webkit-box',
           WebkitLineClamp: 3,
           WebkitBoxOrient: 'vertical',
           overflow: 'hidden'
         }}>
-          {post.content.replace(/[•\-].*/g, '').substring(0, 120)}...
+          {post.content.replace(/[•\-].*/g, '').substring(0, windowWidth < 768 ? 80 : 120)}...
         </p>
         
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          fontSize: '13px',
+          fontSize: windowWidth < 768 ? '12px' : '13px',
           color: '#888',
           marginBottom: '15px',
           flexWrap: 'wrap',
-          gap: '10px'
+          gap: '8px'
         }}>
           <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <FaUser /> {post.author.split(' - ')[0]}
+            <FaUser size={windowWidth < 768 ? 12 : 14} /> {post.author.split(' - ')[0]}
           </span>
           <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <FaCalendar /> {post.date}
+            <FaCalendar size={windowWidth < 768 ? 12 : 14} /> {post.date}
           </span>
           <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <FaClock /> {post.readTime}
+            <FaClock size={windowWidth < 768 ? 12 : 14} /> {post.readTime}
           </span>
           <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <FaEye /> {viewCount}
+            <FaEye size={windowWidth < 768 ? 12 : 14} /> {viewCount}
           </span>
         </div>
         
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center'
+          alignItems: 'center',
+          flexDirection: windowWidth < 480 ? 'column' : 'row',
+          gap: windowWidth < 480 ? '10px' : '0'
         }}>
           <button style={{
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             color: 'white',
             border: 'none',
-            padding: '10px 25px',
+            padding: windowWidth < 768 ? '8px 20px' : '10px 25px',
             borderRadius: '25px',
             cursor: 'pointer',
-            fontSize: '14px',
+            fontSize: windowWidth < 768 ? '13px' : '14px',
             fontWeight: '600',
             transition: 'all 0.3s ease',
-            flex: 1,
-            marginRight: '10px'
+            flex: windowWidth < 480 ? 'none' : 1,
+            marginRight: windowWidth < 480 ? '0' : '10px',
+            width: windowWidth < 480 ? '100%' : 'auto'
           }}>
             Read More
           </button>
@@ -644,7 +738,7 @@ const BlogPostCard = ({ post, onClick, onLike, onBookmark, liked, bookmarked, vi
             alignItems: 'center',
             gap: '8px',
             color: '#666',
-            fontSize: '13px'
+            fontSize: windowWidth < 768 ? '12px' : '13px'
           }}>
             <span>❤️ {post.likes + (liked ? 1 : 0)}</span>
           </div>
@@ -654,7 +748,7 @@ const BlogPostCard = ({ post, onClick, onLike, onBookmark, liked, bookmarked, vi
   );
 };
 
-// Blog Post Detail Component
+// Blog Post Detail Component - Updated for responsiveness
 const BlogPostDetail = ({ 
   post, 
   onBack, 
@@ -672,7 +766,8 @@ const BlogPostDetail = ({
   bookmarked,
   viewCount,
   relatedPosts,
-  onPostClick
+  onPostClick,
+  windowWidth
 }) => {
   return (
     <div style={{ width: '100%' }}>
@@ -682,10 +777,10 @@ const BlogPostDetail = ({
           background: 'none',
           border: '2px solid #667eea',
           color: '#667eea',
-          padding: '12px 25px',
+          padding: windowWidth < 768 ? '10px 20px' : '12px 25px',
           borderRadius: '25px',
           cursor: 'pointer',
-          fontSize: '15px',
+          fontSize: windowWidth < 768 ? '14px' : '15px',
           fontWeight: '600',
           marginBottom: '30px',
           transition: 'all 0.3s ease',
@@ -700,7 +795,7 @@ const BlogPostDetail = ({
       <article style={{
         background: 'white',
         borderRadius: '15px',
-        padding: '40px',
+        padding: windowWidth < 768 ? '20px' : '40px',
         boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
         marginBottom: '30px'
       }}>
@@ -711,11 +806,12 @@ const BlogPostDetail = ({
             alignItems: 'flex-start',
             marginBottom: '20px',
             flexWrap: 'wrap',
-            gap: '15px'
+            gap: '15px',
+            flexDirection: windowWidth < 768 ? 'column' : 'row'
           }}>
             <div style={{ flex: 1 }}>
               <h1 style={{
-                fontSize: '2.5rem',
+                fontSize: windowWidth < 768 ? '1.8rem' : windowWidth < 1024 ? '2.2rem' : '2.5rem',
                 color: '#333',
                 marginBottom: '15px',
                 lineHeight: '1.3',
@@ -726,31 +822,31 @@ const BlogPostDetail = ({
               
               <div style={{
                 display: 'flex',
-                gap: '20px',
+                gap: windowWidth < 768 ? '10px' : '20px',
                 alignItems: 'center',
                 flexWrap: 'wrap',
-                fontSize: '15px',
+                fontSize: windowWidth < 768 ? '13px' : '15px',
                 color: '#666',
                 marginBottom: '20px'
               }}>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '5px', fontWeight: '600' }}>
-                  <FaUser /> {post.author}
+                  <FaUser size={windowWidth < 768 ? 14 : 16} /> {post.author}
                 </span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  <FaCalendar /> {post.date}
+                  <FaCalendar size={windowWidth < 768 ? 14 : 16} /> {post.date}
                 </span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  <FaClock /> {post.readTime}
+                  <FaClock size={windowWidth < 768 ? 14 : 16} /> {post.readTime}
                 </span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  <FaEye /> {viewCount} views
+                  <FaEye size={windowWidth < 768 ? 14 : 16} /> {viewCount} views
                 </span>
                 <span style={{
                   background: '#667eea',
                   color: 'white',
                   padding: '6px 15px',
                   borderRadius: '20px',
-                  fontSize: '13px',
+                  fontSize: windowWidth < 768 ? '11px' : '13px',
                   fontWeight: '600'
                 }}>
                   {post.category}
@@ -758,24 +854,30 @@ const BlogPostDetail = ({
               </div>
             </div>
             
-            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+            <div style={{ 
+              display: 'flex', 
+              gap: '10px', 
+              flexWrap: 'wrap',
+              width: windowWidth < 768 ? '100%' : 'auto'
+            }}>
               <button 
                 onClick={() => onLike(post.id)}
                 style={{
                   background: liked ? '#ff4757' : '#f8f9fa',
                   color: liked ? 'white' : '#666',
                   border: `2px solid ${liked ? '#ff4757' : '#dee2e6'}`,
-                  padding: '12px 20px',
+                  padding: windowWidth < 768 ? '10px 15px' : '12px 20px',
                   borderRadius: '25px',
                   cursor: 'pointer',
-                  fontSize: '14px',
+                  fontSize: windowWidth < 768 ? '13px' : '14px',
                   fontWeight: '600',
                   transition: 'all 0.3s ease',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
-                  minWidth: '120px',
-                  justifyContent: 'center'
+                  minWidth: windowWidth < 768 ? '100px' : '120px',
+                  justifyContent: 'center',
+                  flex: windowWidth < 768 ? 1 : 'none'
                 }}
               >
                 {liked ? <FaHeart /> : <FaRegHeart />} 
@@ -788,16 +890,17 @@ const BlogPostDetail = ({
                   background: bookmarked ? '#ffd700' : '#f8f9fa',
                   color: bookmarked ? 'white' : '#666',
                   border: `2px solid ${bookmarked ? '#ffd700' : '#dee2e6'}`,
-                  padding: '12px 20px',
+                  padding: windowWidth < 768 ? '10px 15px' : '12px 20px',
                   borderRadius: '25px',
                   cursor: 'pointer',
-                  fontSize: '14px',
+                  fontSize: windowWidth < 768 ? '13px' : '14px',
                   fontWeight: '600',
                   transition: 'all 0.3s ease',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  flex: windowWidth < 768 ? 1 : 'none'
                 }}
               >
                 {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
@@ -808,7 +911,7 @@ const BlogPostDetail = ({
         </header>
 
         <div style={{
-          height: '400px',
+          height: windowWidth < 768 ? '250px' : windowWidth < 1024 ? '350px' : '400px',
           background: `url(${post.image}) center/cover no-repeat`,
           borderRadius: '12px',
           marginBottom: '30px',
@@ -826,9 +929,9 @@ const BlogPostDetail = ({
             <div style={{
               background: 'rgba(0,0,0,0.7)',
               color: 'white',
-              padding: '10px 20px',
+              padding: '8px 15px',
               borderRadius: '25px',
-              fontSize: '14px'
+              fontSize: windowWidth < 768 ? '12px' : '14px'
             }}>
               📸 {post.category} Event
             </div>
@@ -838,7 +941,7 @@ const BlogPostDetail = ({
         <div style={{ 
           lineHeight: '1.8', 
           color: '#444',
-          fontSize: '16px',
+          fontSize: windowWidth < 768 ? '15px' : '16px',
           marginBottom: '40px'
         }}>
           {post.content.split('\n').map((paragraph, index) => (
@@ -856,7 +959,8 @@ const BlogPostDetail = ({
           display: 'flex',
           gap: '15px',
           margin: '40px 0',
-          flexWrap: 'wrap'
+          flexWrap: 'wrap',
+          flexDirection: windowWidth < 480 ? 'column' : 'row'
         }}>
           <button 
             onClick={onDonate}
@@ -864,14 +968,14 @@ const BlogPostDetail = ({
               background: 'linear-gradient(135deg, #28a745 0%, #20c997 100%)',
               color: 'white',
               border: 'none',
-              padding: '15px 25px',
+              padding: windowWidth < 768 ? '12px 20px' : '15px 25px',
               borderRadius: '8px',
               cursor: 'pointer',
-              fontSize: '15px',
+              fontSize: windowWidth < 768 ? '14px' : '15px',
               fontWeight: '600',
               transition: 'all 0.3s ease',
-              flex: 1,
-              minWidth: '200px',
+              flex: windowWidth < 480 ? 'none' : 1,
+              minWidth: windowWidth < 480 ? '100%' : '200px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -886,14 +990,14 @@ const BlogPostDetail = ({
               background: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%)',
               color: 'white',
               border: 'none',
-              padding: '15px 25px',
+              padding: windowWidth < 768 ? '12px 20px' : '15px 25px',
               borderRadius: '8px',
               cursor: 'pointer',
-              fontSize: '15px',
+              fontSize: windowWidth < 768 ? '14px' : '15px',
               fontWeight: '600',
               transition: 'all 0.3s ease',
-              flex: 1,
-              minWidth: '200px',
+              flex: windowWidth < 480 ? 'none' : 1,
+              minWidth: windowWidth < 480 ? '100%' : '200px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -910,8 +1014,19 @@ const BlogPostDetail = ({
           paddingTop: '30px',
           borderTop: '2px solid #e9ecef'
         }}>
-          <h3 style={{ marginBottom: '20px', color: '#333' }}>Share this post:</h3>
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          <h3 style={{ 
+            marginBottom: '20px', 
+            color: '#333',
+            fontSize: windowWidth < 768 ? '1.2rem' : '1.4rem'
+          }}>
+            Share this post:
+          </h3>
+          <div style={{ 
+            display: 'flex', 
+            gap: '12px', 
+            flexWrap: 'wrap',
+            justifyContent: windowWidth < 480 ? 'center' : 'flex-start'
+          }}>
             {[
               { platform: 'facebook', label: 'Facebook', color: '#3b5998', icon: <FaFacebookF /> },
               { platform: 'twitter', label: 'Twitter', color: '#1da1f2', icon: <FaTwitter /> },
@@ -925,19 +1040,20 @@ const BlogPostDetail = ({
                   background: color,
                   color: 'white',
                   border: 'none',
-                  padding: '12px 20px',
+                  padding: windowWidth < 768 ? '10px 15px' : '12px 20px',
                   borderRadius: '8px',
                   cursor: 'pointer',
-                  fontSize: '14px',
+                  fontSize: windowWidth < 768 ? '13px' : '14px',
                   fontWeight: '600',
                   transition: 'all 0.3s ease',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
-                  minWidth: '140px'
+                  minWidth: windowWidth < 480 ? '140px' : '140px',
+                  flex: windowWidth < 480 ? 1 : 'none'
                 }}
               >
-                {icon} {label}
+                {icon} {windowWidth < 480 ? '' : label}
               </button>
             ))}
           </div>
@@ -949,7 +1065,7 @@ const BlogPostDetail = ({
         <div style={{
           background: 'white',
           borderRadius: '15px',
-          padding: '30px',
+          padding: windowWidth < 768 ? '20px' : '30px',
           boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
           marginBottom: '30px'
         }}>
@@ -957,13 +1073,14 @@ const BlogPostDetail = ({
             marginBottom: '25px', 
             color: '#333',
             borderBottom: '3px solid #667eea',
-            paddingBottom: '10px'
+            paddingBottom: '10px',
+            fontSize: windowWidth < 768 ? '1.4rem' : '1.6rem'
           }}>
             📚 Related Posts
           </h2>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gridTemplateColumns: windowWidth < 768 ? '1fr' : windowWidth < 1024 ? 'repeat(auto-fit, minmax(250px, 1fr))' : 'repeat(auto-fit, minmax(300px, 1fr))',
             gap: '20px'
           }}>
             {relatedPosts.map(relatedPost => (
@@ -978,21 +1095,34 @@ const BlogPostDetail = ({
                   border: '1px solid #e9ecef'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-5px)';
-                  e.currentTarget.style.background = '#667eea';
-                  e.currentTarget.style.color = 'white';
+                  if (windowWidth > 768) {
+                    e.currentTarget.style.transform = 'translateY(-5px)';
+                    e.currentTarget.style.background = '#667eea';
+                    e.currentTarget.style.color = 'white';
+                  }
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.background = '#f8f9fa';
-                  e.currentTarget.style.color = 'inherit';
+                  if (windowWidth > 768) {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.background = '#f8f9fa';
+                    e.currentTarget.style.color = 'inherit';
+                  }
                 }}
                 onClick={() => onPostClick(relatedPost)}
               >
-                <h4 style={{ margin: '0 0 10px 0', fontSize: '16px', lineHeight: '1.4' }}>
+                <h4 style={{ 
+                  margin: '0 0 10px 0', 
+                  fontSize: windowWidth < 768 ? '14px' : '16px', 
+                  lineHeight: '1.4' 
+                }}>
                   {relatedPost.title}
                 </h4>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', opacity: '0.7' }}>
+                <div style={{ 
+                  display: 'flex', 
+                  justifyContent: 'space-between', 
+                  fontSize: windowWidth < 768 ? '11px' : '12px', 
+                  opacity: '0.7' 
+                }}>
                   <span>{relatedPost.date}</span>
                   <span>{relatedPost.readTime}</span>
                 </div>
@@ -1006,14 +1136,15 @@ const BlogPostDetail = ({
       <div style={{
         background: 'white',
         borderRadius: '15px',
-        padding: '30px',
+        padding: windowWidth < 768 ? '20px' : '30px',
         boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
       }}>
         <h2 style={{ 
           marginBottom: '25px', 
           color: '#333',
           borderBottom: '3px solid #667eea',
-          paddingBottom: '10px'
+          paddingBottom: '10px',
+          fontSize: windowWidth < 768 ? '1.4rem' : '1.6rem'
         }}>
           💬 Comments ({comments.length})
         </h2>
@@ -1029,7 +1160,7 @@ const BlogPostDetail = ({
               padding: '15px',
               borderRadius: '8px',
               border: '2px solid #e9ecef',
-              fontSize: '15px',
+              fontSize: windowWidth < 768 ? '14px' : '15px',
               minHeight: '100px',
               resize: 'vertical',
               marginBottom: '15px',
@@ -1042,12 +1173,13 @@ const BlogPostDetail = ({
               background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
               color: 'white',
               border: 'none',
-              padding: '12px 30px',
+              padding: windowWidth < 768 ? '10px 25px' : '12px 30px',
               borderRadius: '8px',
               cursor: 'pointer',
-              fontSize: '15px',
+              fontSize: windowWidth < 768 ? '14px' : '15px',
               fontWeight: '600',
-              transition: 'all 0.3s ease'
+              transition: 'all 0.3s ease',
+              width: windowWidth < 480 ? '100%' : 'auto'
             }}
           >
             Post Comment
@@ -1059,7 +1191,7 @@ const BlogPostDetail = ({
           {comments.map(comment => (
             <div key={comment.id} style={{
               background: '#f8f9fa',
-              padding: '20px',
+              padding: windowWidth < 768 ? '15px' : '20px',
               borderRadius: '10px',
               marginBottom: '15px',
               border: '1px solid #e9ecef'
@@ -1068,12 +1200,26 @@ const BlogPostDetail = ({
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'flex-start',
-                marginBottom: '10px'
+                marginBottom: '10px',
+                flexDirection: windowWidth < 480 ? 'column' : 'row',
+                gap: windowWidth < 480 ? '5px' : '0'
               }}>
-                <strong style={{ color: '#333' }}>{comment.user}</strong>
-                <span style={{ color: '#666', fontSize: '13px' }}>{comment.date}</span>
+                <strong style={{ color: '#333', fontSize: windowWidth < 768 ? '14px' : '16px' }}>{comment.user}</strong>
+                <span style={{ 
+                  color: '#666', 
+                  fontSize: windowWidth < 768 ? '12px' : '13px' 
+                }}>
+                  {comment.date}
+                </span>
               </div>
-              <p style={{ margin: '0 0 10px 0', color: '#555', lineHeight: '1.6' }}>{comment.text}</p>
+              <p style={{ 
+                margin: '0 0 10px 0', 
+                color: '#555', 
+                lineHeight: '1.6',
+                fontSize: windowWidth < 768 ? '14px' : '15px'
+              }}>
+                {comment.text}
+              </p>
               <button 
                 onClick={() => onCommentLike(post.id, comment.id)}
                 style={{
@@ -1081,13 +1227,13 @@ const BlogPostDetail = ({
                   border: 'none',
                   color: '#666',
                   cursor: 'pointer',
-                  fontSize: '12px',
+                  fontSize: windowWidth < 768 ? '11px' : '12px',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '5px'
                 }}
               >
-                <FaRegHeart /> Like ({comment.likes || 0})
+                <FaRegHeart size={windowWidth < 768 ? 12 : 14} /> Like ({comment.likes || 0})
               </button>
             </div>
           ))}
@@ -1110,30 +1256,3 @@ const BlogPostDetail = ({
 };
 
 export default BlogPage;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
