@@ -13,23 +13,19 @@ const steps = [
     title: "Our Mission",
     text: "Anand Seva Trust is dedicated to supporting families and individuals facing difficult or vulnerable circumstances.",
   },
+ 
   {
     id: "02",
-    title: "Who We Support",
-    text: "We extend care to families without stability, children from troubled backgrounds, and individuals drifting toward unsafe environments.",
-  },
-  {
-    id: "03",
     title: "Education & Learning",
     text: "We provide quality education, academic guidance, skill development, and value-based learning to build a strong foundation.",
   },
   {
-    id: "04",
+    id: "03",
     title: "Care & Protection",
     text: "We ensure emotional healing, counselling, moral guidance, and a safe environment for growth and rebuilding confidence.",
   },
   {
-    id: "05",
+    id: "04",
     title: "Path to Better Future",
     text: "Through structured programs and compassionate care, we help restore dignity and offer new opportunities for stability and hope.",
   },
