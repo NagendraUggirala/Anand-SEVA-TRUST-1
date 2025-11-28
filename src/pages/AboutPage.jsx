@@ -508,7 +508,7 @@ const About = () => {
     className="inline-block"
   >
     <Link
-      to="/donate"
+      to="/contact"
       className="relative bg-orange-500 hover:bg-orange-500 text-white px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 rounded-full font-semibold shadow-lg overflow-hidden group hover:scale-105 transition-transform duration-300 text-sm sm:text-base inline-flex items-center"
     >
       <span className="relative z-10">
@@ -540,7 +540,7 @@ const About = () => {
       </p>
       <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
         <Link
-          to="/donate"
+          to="/industries"
           className="relative bg-orange-500 hover:bg-orange-500 text-white px-4 py-2 sm:px-6 sm:py-2 md:px-8 md:py-3 rounded-full font-semibold shadow-lg overflow-hidden group hover:scale-105 transition-transform duration-300 text-sm sm:text-base inline-flex items-center"
         >
           <span className="relative z-10">

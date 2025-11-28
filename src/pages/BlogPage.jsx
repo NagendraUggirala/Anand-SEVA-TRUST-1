@@ -299,37 +299,7 @@ const BlogPage = () => {
       backgroundColor: '#f5f7fa',
       minHeight: '100vh'
     }}>
-      {/* Mobile Header */}
-   {windowWidth < 1024 && !selectedPost && (
-  <div style={{
-    background: 'white',
-    padding: '15px 20px',
-    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  }}>
-    <button 
-      onClick={toggleMobileMenu}
-      style={{
-        background: '#667eea',
-        color: 'white',
-        border: 'none',
-        padding: '10px 15px',
-        borderRadius: '8px',
-        cursor: 'pointer',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '8px'
-      }}
-    >
-      {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
-      Menu
-    </button>
-    <h3 style={{ margin: 0, color: '#333' }}>Anand Seva Trust</h3>
-  </div>
-)}
-
+  
 
       {/* Full Width Banner */}
       <div style={{
@@ -371,6 +341,37 @@ const BlogPage = () => {
           />
         </div>
       </div>
+          {/* Mobile Header */}
+   {windowWidth < 1024 && !selectedPost && (
+  <div style={{
+    background: 'white',
+    padding: '15px 20px',
+    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  }}>
+    <button 
+      onClick={toggleMobileMenu}
+      style={{
+        background: '#667eea',
+        color: 'white',
+        border: 'none',
+        padding: '10px 15px',
+        borderRadius: '8px',
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px'
+      }}
+    >
+      {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+      Menu
+    </button>
+    <h3 style={{ margin: 0, color: '#333' }}>Anand Seva Trust</h3>
+  </div>
+)}
+
 
       <div style={{ padding: '40px 0' }}>
         {selectedPost ? (
@@ -611,18 +612,22 @@ const BlogPostCard = ({ post, onClick, onLike, onBookmark, liked, bookmarked, vi
           justifyContent: 'space-between',
           alignItems: 'center'
         }}>
-          <button style={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            color: 'white',
-            border: 'none',
-            padding: '10px 25px',
-            borderRadius: '25px',
-            cursor: 'pointer',
-            fontSize: '14px',
-            fontWeight: '600'
-          }}>
-            Read More
-          </button>
+       <button
+  style={{
+    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    color: 'white',
+    border: 'none',
+    padding: '5px 14px',   // smaller padding
+    borderRadius: '18px',  // smaller radius
+    cursor: 'pointer',
+    fontSize: '12px',      // smaller text
+    fontWeight: '600',
+    whiteSpace: 'nowrap',
+  }}
+>
+  Read More
+</button>
+
           
           <div style={{
             display: 'flex',

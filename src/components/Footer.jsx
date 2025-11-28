@@ -163,22 +163,23 @@ const Footer = () => {
                   We work to provide support, guidance, and welfare services that enrich lives and strengthen communities.
                 </p>
               </div>
- 
-              {/* Quick Links */}
-              <div className="lg:col-span-2 text-left">
-                <h3 className="text-lg font-semibold mb-4 text-white">Quick Links</h3>
-                <div className="space-y-3">
-                  {quickLinks.map((link, index) => (
-                    <Link
-                      key={index}
-                      to={link.path}
-                      className="block text-gray-300 py-1 text-sm hover:text-white transition-all duration-200"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
+ <div className="lg:col-span-2 text-left">
+  <h3 className="text-lg font-semibold mb-3 text-white">Quick Links</h3>
+
+  {/* NO GAP – RESPONSIVE CLEAN LIST */}
+  <div className="flex flex-col">
+    {quickLinks.map((link, index) => (
+      <Link
+        key={index}
+        to={link.path}
+        className="text-gray-300 text-sm hover:text-white transition-all duration-200 leading-tight py-[2px]"
+      >
+        {link.label}
+      </Link>
+    ))}
+  </div>
+</div>
+
  
               {/* Contact */}
               <div className="lg:col-span-3 text-left">

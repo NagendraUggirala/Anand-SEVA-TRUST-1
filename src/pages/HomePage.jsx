@@ -42,7 +42,7 @@ const events = [
   },
   {
     day: "15",
-    month: "August",
+    month: "Aug",
     title: "Annual Charity Gala Dinner 2024",
     text: "Join us for an evening of fine dining and fundraising to support children's education",
     venue: "Grand Ballroom, Manhattan, NY 10001",
@@ -50,7 +50,7 @@ const events = [
   },
   {
     day: "22",
-    month: "September",
+    month: "Sep",
     title: "Volunteer Training Workshop",
     text: "Learn essential skills and techniques to become an effective volunteer in our community",
     venue: "Community Center, Brooklyn, NY 11201",
@@ -58,7 +58,7 @@ const events = [
   },
   {
     day: "05",
-    month: "October",
+    month: "Oct",
     title: "Winter Clothing Drive Launch",
     text: "Help us collect warm clothing for families in need during the upcoming winter season",
     venue: "Central Park, New York, NY 10022",
@@ -367,9 +367,13 @@ const HomePage = () => {
                     <h5 className="font-semibold text-gray-700 text-xs sm:text-sm">Venue</h5>
                     <p className="text-gray-600 text-xs sm:text-sm">{item.venue}</p>
                   </div>
-                  <button className="text-red-500 font-semibold flex items-center gap-1 hover:text-red-600 transition-colors text-xs sm:text-sm">
-                    Event Details <ArrowRight size={16} />
-                  </button>
+                 
+<Link
+  to="/blog"
+  className="text-red-500 font-semibold flex items-center gap-1 hover:text-red-600 transition-colors text-xs sm:text-sm"
+>
+  Event Details <ArrowRight size={16} />
+</Link>
                 </div>
               </div>
             ))}
@@ -473,14 +477,7 @@ const HomePage = () => {
 
           </div>
 
-          <div className="mt-6 sm:mt-10 flex justify-end">
-            <button 
-              onClick={() => navigate("/testimonials")}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow transition flex items-center gap-2 text-sm sm:text-base"
-            >
-              ➤ All Testimonials
-            </button>
-          </div>
+         
 
         </div>
       </section>
