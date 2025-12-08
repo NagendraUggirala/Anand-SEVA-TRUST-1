@@ -1,7 +1,20 @@
 // ContactAnandSevaTrust.jsx
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
 
+// Create axios instance
+const api = axios.create({
+  baseURL: process.env.REACT_APP_API_URL || "https://jsonplaceholder.typicode.com",
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+  }
+});
+
+// Initial form values
 const initialForm = {
   name: "",
   email: "",
@@ -12,42 +25,135 @@ const initialForm = {
   website: "" // honeypot
 };
 
+// Yup validation schema
+const validationSchema = Yup.object({
+  name: Yup.string()
+    .trim()
+    .required("Name is required")
+    .min(2, "Name must be at least 2 characters"),
+  email: Yup.string()
+    .trim()
+    .email("Enter a valid email")
+    .required("Email is required"),
+  phone: Yup.string()
+    .trim()
+    .required("Phone is required")
+    .matches(/^\+?[0-9\s]{7,15}$/, "Enter a valid phone number"),
+  inquiryType: Yup.string().required("Please select inquiry type"),
+  subject: Yup.string()
+    .trim()
+    .required("Subject is required")
+    .min(5, "Subject must be at least 5 characters"),
+  message: Yup.string()
+    .trim()
+    .required("Message is required")
+    .min(10, "Please provide a detailed message (minimum 10 characters)")
+    .max(1000, "Message must be less than 1000 characters"),
+  website: Yup.string().test(
+    'honeypot',
+    'Spam detected',
+    value => !value || value.trim() === ''
+  )
+});
+
 const ContactAnandSevaTrust = () => {
-  const [formData, setFormData] = useState(() => {
-    try {
-      const saved = localStorage.getItem("anand_seva_contact_draft");
-      return saved ? JSON.parse(saved) : initialForm;
-    } catch {
-      return initialForm;
-    }
-  });
-  const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [apiError, setApiError] = useState(null);
 
   // refs for sections
   const sectionRef = useRef(null);
   const sectionInView = useInView(sectionRef, { once: true, threshold: 0.15 });
 
+  // Load draft from localStorage ONCE
+  const [initialValues] = useState(() => {
+    try {
+      const saved = localStorage.getItem("anand_seva_contact_draft");
+      return saved ? { ...initialForm, ...JSON.parse(saved) } : initialForm;
+    } catch {
+      return initialForm;
+    }
+  });
+
+  // Clear localStorage on component mount (page load)
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      try {
-        localStorage.setItem("anand_seva_contact_draft", JSON.stringify(formData));
-      } catch (error) {
-        console.warn("Could not save to localStorage:", error);
-      }
-    }, 600);
+    localStorage.removeItem("anand_seva_contact_draft");
+  }, []);
 
-    return () => clearTimeout(timeoutId);
-  }, [formData]);
-
+  // Auto-clear success alert
   useEffect(() => {
     if (submitStatus === "success") {
-      const timeoutId = setTimeout(() => setSubmitStatus(null), 5000);
-      return () => clearTimeout(timeoutId);
+      const t = setTimeout(() => setSubmitStatus(null), 5000);
+      return () => clearTimeout(t);
     }
   }, [submitStatus]);
+
+  // Auto-save form data to localStorage
+  const handleFormChange = (values) => {
+    const t = setTimeout(() => {
+      try {
+        localStorage.setItem("anand_seva_contact_draft", JSON.stringify(values));
+      } catch {
+        /* ignore */
+      }
+    }, 600);
+    return () => clearTimeout(t);
+  };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
+      setApiError(null);
+      setSubmitStatus(null);
+
+      // Save form data before submission
+      handleFormChange(values);
+
+      // Prepare payload (remove honeypot field)
+      const { website, ...submitData } = values;
+      const payload = {
+        ...submitData,
+        timestamp: new Date().toISOString(),
+        source: "Anand Seva Trust Contact Form"
+      };
+
+      console.log("📩 Support request payload:", payload);
+
+      try {
+        // Using dummy URL for now - later replace with your backend URL
+        const response = await api.post("/posts", payload);
+
+        console.log("✅ API response:", response.data);
+
+        setSubmitStatus("success");
+        localStorage.removeItem("anand_seva_contact_draft");
+        resetForm();
+        setShowModal(true);
+        setTimeout(() => setShowModal(false), 2500);
+      } catch (error) {
+        console.error("❌ Error submitting support request:", error);
+        setSubmitStatus("error");
+        
+        // Detailed error logging
+        if (error.response) {
+          // Server responded with error status
+          console.error("Server error response:", error.response.data);
+          setApiError("Server error. Please try again later.");
+        } else if (error.request) {
+          // Request made but no response
+          console.error("No response received:", error.request);
+          setApiError("Network error. Please check your connection and try again.");
+        } else {
+          // Something else happened
+          console.error("Error:", error.message);
+          setApiError("Something went wrong. Please try again.");
+        }
+      } finally {
+        setSubmitting(false);
+      }
+    },
+  });
 
   const contactMethods = [
     {
@@ -111,69 +217,6 @@ const ContactAnandSevaTrust = () => {
     "General Inquiry"
   ];
 
-  // Fixed validation function
-  const validate = (data) => {
-    const e = {};
-    if (!data.name?.trim()) e.name = "Name is required";
-    if (!data.email?.trim()) e.email = "Email is required";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) e.email = "Enter a valid email";
-    if (!data.phone?.trim()) e.phone = "Phone is required";
-    else if (!/^\+?[0-9\s]{7,15}$/.test(data.phone.replace(/\s/g, ''))) e.phone = "Enter a valid phone number";
-    if (!data.inquiryType) e.inquiryType = "Please select inquiry type";
-    if (!data.subject?.trim()) e.subject = "Subject is required";
-    if (!data.message?.trim() || data.message.trim().length < 10) e.message = "Please provide a detailed message (min 10 chars)";
-    if (data.website && data.website.trim().length > 0) e.website = "Spam detected";
-    return e;
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: undefined }));
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const validationErrors = validate(formData);
-
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      const firstErrorKey = Object.keys(validationErrors)[0];
-      const errorElement = document.querySelector(`[name="${firstErrorKey}"]`);
-      if (errorElement) {
-        errorElement.focus();
-      }
-      return;
-    }
-
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1200));
-
-      // Clear form and local storage
-      setFormData(initialForm);
-      try {
-        localStorage.removeItem("anand_seva_contact_draft");
-      } catch (error) {
-        console.warn("Could not clear localStorage:", error);
-      }
-
-      setSubmitStatus("success");
-      setShowModal(true);
-      setTimeout(() => setShowModal(false), 2500);
-    } catch (error) {
-      console.error("Submission error:", error);
-      setSubmitStatus("error");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   const fadeUp = {
     hidden: { opacity: 0, y: 18 },
     visible: {
@@ -186,75 +229,79 @@ const ContactAnandSevaTrust = () => {
     }
   };
 
+  // Helper to get field error
+  const getFieldError = (fieldName) => {
+    return formik.touched[fieldName] && formik.errors[fieldName] 
+      ? formik.errors[fieldName] 
+      : null;
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* HERO SECTION */}
-     <section
-      className="relative py-16 overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #1e3c72, #2a5298)" }}
-    >
-      {/* Hero Background Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-white/25 rounded-full mix-blend-overlay filter blur-3xl opacity-20 animate-pulse"></div>
-        <div className="absolute top-1/2 right-0 w-80 h-80 bg-white/30 rounded-full mix-blend-overlay filter blur-3xl opacity-25 animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute bottom-0 left-1/2 w-64 h-64 bg-white/40 rounded-full mix-blend-overlay filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
+      <section
+        className="relative py-16 overflow-hidden"
+        style={{ background: "linear-gradient(135deg, #1e3c72, #2a5298)" }}
+      >
+        {/* Hero Background Elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-white/25 rounded-full mix-blend-overlay filter blur-3xl opacity-20 animate-pulse"></div>
+          <div className="absolute top-1/2 right-0 w-80 h-80 bg-white/30 rounded-full mix-blend-overlay filter blur-3xl opacity-25 animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute bottom-0 left-1/2 w-64 h-64 bg-white/40 rounded-full mix-blend-overlay filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
+        </div>
 
-        {/* Hope Symbols */}
-       
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto text-center text-white"
-        >
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
-            initial={{ scale: 0.9 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-block bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-xl mb-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl mx-auto text-center text-white"
           >
-            <h1 className="text-3xl md:text-5xl font-bold mb-4">
-              <span className="text-amber-200">Anand Seva Trust</span>
-            </h1>
-            <p className="text-xl md:text-2xl font-semibold mb-4 text-white/90">
-              Extending Care. Restoring Lives. Empowering Futures.
-            </p>
-            <p className="text-base md:text-lg text-white/80 mb-6 leading-relaxed">
-              A compassionate initiative dedicated to supporting individuals and families facing difficult circumstances.
-            </p>
+            <motion.div
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="inline-block bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-xl mb-8"
+            >
+              <h1 className="text-3xl md:text-5xl font-bold mb-4">
+                <span className="text-amber-200">Anand Seva Trust</span>
+              </h1>
+              <p className="text-xl md:text-2xl font-semibold mb-4 text-white/90">
+                Extending Care. Restoring Lives. Empowering Futures.
+              </p>
+              <p className="text-base md:text-lg text-white/80 mb-6 leading-relaxed">
+                A compassionate initiative dedicated to supporting individuals and families facing difficult circumstances.
+              </p>
+            </motion.div>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <motion.a 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href="tel:+919876543210" 
+                className="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl text-base flex items-center justify-center gap-3 border border-orange-400"
+              >
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+                Call for Help
+              </motion.a>
+
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href="https://wa.me/919876543210"
+                className="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl text-base flex items-center justify-center gap-3 border border-emerald-400"
+              >
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893c0-3.18-1.24-6.169-3.495-8.418" />
+                </svg>
+                WhatsApp Support
+              </motion.a>
+            </div>
           </motion.div>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <motion.a 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              href="tel:+919876543210" 
-              className="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl text-base flex items-center justify-center gap-3 border border-orange-400"
-            >
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-              </svg>
-              Call for Help
-            </motion.a>
-
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              href="https://wa.me/919876543210"
-              className="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl text-base flex items-center justify-center gap-3 border border-emerald-400"
-            >
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893c0-3.18-1.24-6.169-3.495-8.418" />
-              </svg>
-              WhatsApp Support
-            </motion.a>
-          </div>
-        </motion.div>
-      </div>
-    </section>
+        </div>
+      </section>
 
       {/* MISSION SECTION */}
       <section className="py-12 bg-gradient-to-b from-blue-50 to-white">
@@ -383,12 +430,10 @@ const ContactAnandSevaTrust = () => {
                       ))}
                     </div>
                   </div>
-
-                 
                 </div>
               </motion.div>
 
-              {/* FORM CARD */}
+              {/* FORM CARD with Formik/Yup/Axios */}
               <motion.div variants={fadeUp} className="lg:col-span-2 flex">
                 <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-blue-200 w-full flex flex-col">
                   <div className="flex-1">
@@ -422,21 +467,30 @@ const ContactAnandSevaTrust = () => {
                     )}
 
                     {submitStatus === "error" && (
-                      <div className="bg-rose-50 border border-rose-200 rounded-lg p-4 mb-6 text-rose-700 text-sm">
+                      <div className="bg-rose-50 border border-rose-200 rounded-lg p-4 mb-3 text-rose-700 text-sm">
                         Something went wrong. Please try again later or contact us directly.
                       </div>
                     )}
 
-                    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                    {apiError && (
+                      <div className="bg-rose-50 border border-rose-200 rounded-lg p-3 mb-3 text-rose-700 text-xs">
+                        {apiError}
+                      </div>
+                    )}
+
+                    <form onSubmit={formik.handleSubmit} className="space-y-6" noValidate>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                         <FormField
                           id="name"
                           label="Full Name *"
                           name="name"
-                          value={formData.name}
-                          onChange={handleChange}
+                          type="text"
+                          value={formik.values.name}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                           placeholder="Enter your full name"
-                          error={errors.name}
+                          error={getFieldError("name")}
+                          touched={formik.touched.name}
                           required
                         />
                         <FormField
@@ -444,10 +498,12 @@ const ContactAnandSevaTrust = () => {
                           label="Email Address *"
                           name="email"
                           type="email"
-                          value={formData.email}
-                          onChange={handleChange}
+                          value={formik.values.email}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                           placeholder="Enter your email"
-                          error={errors.email}
+                          error={getFieldError("email")}
+                          touched={formik.touched.email}
                           required
                         />
                       </div>
@@ -457,27 +513,41 @@ const ContactAnandSevaTrust = () => {
                           id="phone"
                           label="Phone Number *"
                           name="phone"
-                          value={formData.phone}
-                          onChange={handleChange}
+                          type="tel"
+                          value={formik.values.phone}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                           placeholder="+91 98765 43210"
-                          error={errors.phone}
+                          error={getFieldError("phone")}
+                          touched={formik.touched.phone}
                           required
                         />
                         <div>
-                          <label className="block text-sm font-semibold text-blue-700 mb-2">Type of Support Needed *</label>
+                          <label className="block text-sm font-semibold text-blue-700 mb-2">
+                            Type of Support Needed *
+                          </label>
                           <select
                             name="inquiryType"
-                            value={formData.inquiryType}
-                            onChange={handleChange}
-                            className={`w-full px-3 md:px-4 py-2 md:py-3 bg-blue-50 border ${errors.inquiryType ? "border-rose-400" : "border-blue-300"} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm md:text-base`}
-                            aria-invalid={!!errors.inquiryType}
+                            value={formik.values.inquiryType}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            className={`w-full px-3 md:px-4 py-2 md:py-3 bg-blue-50 border ${
+                              getFieldError("inquiryType")
+                                ? "border-rose-400"
+                                : "border-blue-300"
+                            } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm md:text-base`}
+                            aria-invalid={!!getFieldError("inquiryType")}
                           >
                             <option value="">Select support type</option>
                             {inquiryTypes.map((type, idx) => (
                               <option key={idx} value={type}>{type}</option>
                             ))}
                           </select>
-                          {errors.inquiryType && <p className="text-rose-600 text-sm mt-2">{errors.inquiryType}</p>}
+                          {getFieldError("inquiryType") && (
+                            <p className="text-rose-600 text-sm mt-2">
+                              {getFieldError("inquiryType")}
+                            </p>
+                          )}
                         </div>
                       </div>
 
@@ -486,32 +556,46 @@ const ContactAnandSevaTrust = () => {
                           id="subject"
                           label="Subject *"
                           name="subject"
-                          value={formData.subject}
-                          onChange={handleChange}
+                          type="text"
+                          value={formik.values.subject}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                           placeholder="Brief description of your situation"
-                          error={errors.subject}
+                          error={getFieldError("subject")}
+                          touched={formik.touched.subject}
                           required
                         />
                       </div>
 
                       <div>
-                        <label className="block text-sm font-semibold text-blue-700 mb-2">Tell Us Your Situation *</label>
+                        <label className="block text-sm font-semibold text-blue-700 mb-2">
+                          Tell Us Your Situation *
+                        </label>
                         <textarea
                           name="message"
                           rows="5"
-                          value={formData.message}
-                          onChange={handleChange}
+                          value={formik.values.message}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                           placeholder="Please share details about your current situation, challenges you're facing, type of support needed, and any immediate concerns. All information is kept confidential."
-                          className={`w-full px-3 md:px-4 py-2 md:py-3 bg-blue-50 border ${errors.message ? "border-rose-400" : "border-blue-300"} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none text-sm md:text-base`}
-                          aria-invalid={!!errors.message}
+                          className={`w-full px-3 md:px-4 py-2 md:py-3 bg-blue-50 border ${
+                            getFieldError("message")
+                              ? "border-rose-400"
+                              : "border-blue-300"
+                          } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none text-sm md:text-base`}
+                          aria-invalid={!!getFieldError("message")}
                         />
                         <div className="flex justify-between items-center mt-2">
-                          {errors.message ? (
-                            <p className="text-rose-600 text-sm">{errors.message}</p>
+                          {getFieldError("message") ? (
+                            <p className="text-rose-600 text-sm">{getFieldError("message")}</p>
                           ) : (
-                            <p className="text-blue-600 text-xs md:text-sm">Please provide detailed information for better assistance</p>
+                            <p className="text-blue-600 text-xs md:text-sm">
+                              Please provide detailed information for better assistance
+                            </p>
                           )}
-                          <p className="text-blue-400 text-xs md:text-sm">{formData.message.length}/1000</p>
+                          <p className="text-blue-400 text-xs md:text-sm">
+                            {formik.values.message.length}/1000
+                          </p>
                         </div>
                       </div>
 
@@ -522,19 +606,26 @@ const ContactAnandSevaTrust = () => {
                           id="website"
                           name="website"
                           type="text"
-                          value={formData.website}
-                          onChange={handleChange}
+                          value={formik.values.website}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                         />
-                        {errors.website && <p className="text-rose-600">{errors.website}</p>}
+                        {getFieldError("website") && (
+                          <p className="text-rose-600">{getFieldError("website")}</p>
+                        )}
                       </div>
 
                       <button
                         type="submit"
-                        disabled={isSubmitting}
-                        className={`w-full py-3 md:py-4 rounded-lg font-bold text-white transition-all duration-300 text-sm md:text-base ${isSubmitting ? "bg-blue-400 cursor-not-allowed" : "bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 shadow-lg hover:shadow-xl"}`}
-                        aria-busy={isSubmitting}
+                        disabled={formik.isSubmitting}
+                        className={`w-full py-3 md:py-4 rounded-lg font-bold text-white transition-all duration-300 text-sm md:text-base ${
+                          formik.isSubmitting
+                            ? "bg-blue-400 cursor-not-allowed"
+                            : "bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 shadow-lg hover:shadow-xl"
+                        }`}
+                        aria-busy={formik.isSubmitting}
                       >
-                        {isSubmitting ? (
+                        {formik.isSubmitting ? (
                           <div className="flex items-center justify-center">
                             <div className="w-4 h-4 md:w-5 md:h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2 md:mr-3"></div>
                             Sending Your Request...
@@ -590,7 +681,21 @@ const ContactAnandSevaTrust = () => {
 export default ContactAnandSevaTrust;
 
 /* ---------------- FORM FIELD COMPONENT ---------------- */
-function FormField({ id, label, name, type = "text", value, onChange, placeholder, error, required }) {
+function FormField({ 
+  id, 
+  label, 
+  name, 
+  type = "text", 
+  value, 
+  onChange, 
+  onBlur,
+  placeholder, 
+  error, 
+  touched,
+  required 
+}) {
+  const hasError = touched && error;
+  
   return (
     <div>
       <label htmlFor={id} className="block text-sm font-semibold text-blue-700 mb-2">
@@ -602,13 +707,16 @@ function FormField({ id, label, name, type = "text", value, onChange, placeholde
         type={type}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         placeholder={placeholder}
         required={required}
-        className={`w-full px-3 md:px-4 py-2 md:py-3 bg-blue-50 border ${error ? "border-rose-400" : "border-blue-300"} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm md:text-base`}
-        aria-invalid={!!error}
-        aria-describedby={error ? `${id}-error` : undefined}
+        className={`w-full px-3 md:px-4 py-2 md:py-3 bg-blue-50 border ${
+          hasError ? "border-rose-400" : "border-blue-300"
+        } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm md:text-base`}
+        aria-invalid={!!hasError}
+        aria-describedby={hasError ? `${id}-error` : undefined}
       />
-      {error && (
+      {hasError && (
         <p id={`${id}-error`} className="text-rose-600 text-sm mt-2">
           {error}
         </p>
