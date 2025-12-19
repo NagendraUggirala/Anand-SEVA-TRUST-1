@@ -218,7 +218,7 @@ const HomePage = () => {
                   onClick={() => navigate("/contact")}
                   className="bg-white text-blue-600 hover:bg-blue-50 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-lg flex items-center justify-center"
                 >
-                  Get Help Today <ArrowRight className="ml-2 h-5 w-5" />
+                  Get More <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </div>
             </div>
