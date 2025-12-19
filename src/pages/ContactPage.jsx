@@ -7,11 +7,12 @@ import axios from "axios";
 
 // Create axios instance
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "https://jsonplaceholder.typicode.com",
+  baseURL:
+    process.env.REACT_APP_API_URL || "https://jsonplaceholder.typicode.com",
   timeout: 10000,
   headers: {
-    'Content-Type': 'application/json',
-  }
+    "Content-Type": "application/json",
+  },
 });
 
 // Initial form values
@@ -22,7 +23,7 @@ const initialForm = {
   inquiryType: "",
   subject: "",
   message: "",
-  website: "" // honeypot
+  website: "", // honeypot
 };
 
 // Yup validation schema
@@ -50,10 +51,10 @@ const validationSchema = Yup.object({
     .min(10, "Please provide a detailed message (minimum 10 characters)")
     .max(1000, "Message must be less than 1000 characters"),
   website: Yup.string().test(
-    'honeypot',
-    'Spam detected',
-    value => !value || value.trim() === ''
-  )
+    "honeypot",
+    "Spam detected",
+    (value) => !value || value.trim() === ""
+  ),
 });
 
 const ContactAnandSevaTrust = () => {
@@ -92,7 +93,10 @@ const ContactAnandSevaTrust = () => {
   const handleFormChange = (values) => {
     const t = setTimeout(() => {
       try {
-        localStorage.setItem("anand_seva_contact_draft", JSON.stringify(values));
+        localStorage.setItem(
+          "anand_seva_contact_draft",
+          JSON.stringify(values)
+        );
       } catch {
         /* ignore */
       }
@@ -115,7 +119,7 @@ const ContactAnandSevaTrust = () => {
       const payload = {
         ...submitData,
         timestamp: new Date().toISOString(),
-        source: "Anand Seva Trust Contact Form"
+        source: "Anand Seva Trust Contact Form",
       };
 
       console.log("📩 Support request payload:", payload);
@@ -134,7 +138,7 @@ const ContactAnandSevaTrust = () => {
       } catch (error) {
         console.error("❌ Error submitting support request:", error);
         setSubmitStatus("error");
-        
+
         // Detailed error logging
         if (error.response) {
           // Server responded with error status
@@ -143,7 +147,9 @@ const ContactAnandSevaTrust = () => {
         } else if (error.request) {
           // Request made but no response
           console.error("No response received:", error.request);
-          setApiError("Network error. Please check your connection and try again.");
+          setApiError(
+            "Network error. Please check your connection and try again."
+          );
         } else {
           // Something else happened
           console.error("Error:", error.message);
@@ -170,7 +176,7 @@ const ContactAnandSevaTrust = () => {
       color: "from-blue-500 to-cyan-500",
       bgColor: "bg-blue-50",
       borderColor: "border-blue-200",
-      iconColor: "text-blue-600"
+      iconColor: "text-blue-600",
     },
     {
       icon: (
@@ -186,7 +192,7 @@ const ContactAnandSevaTrust = () => {
       color: "from-green-500 to-emerald-500",
       bgColor: "bg-green-50",
       borderColor: "border-green-200",
-      iconColor: "text-green-600"
+      iconColor: "text-green-600",
     },
     {
       icon: (
@@ -202,8 +208,8 @@ const ContactAnandSevaTrust = () => {
       color: "from-emerald-500 to-green-500",
       bgColor: "bg-emerald-50",
       borderColor: "border-emerald-200",
-      iconColor: "text-emerald-600"
-    }
+      iconColor: "text-emerald-600",
+    },
   ];
 
   const inquiryTypes = [
@@ -214,7 +220,7 @@ const ContactAnandSevaTrust = () => {
     "Volunteer Opportunity",
     "Donation Inquiry",
     "Partnership",
-    "General Inquiry"
+    "General Inquiry",
   ];
 
   const fadeUp = {
@@ -224,15 +230,15 @@ const ContactAnandSevaTrust = () => {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
-      }
-    }
+        ease: "easeOut",
+      },
+    },
   };
 
   // Helper to get field error
   const getFieldError = (fieldName) => {
-    return formik.touched[fieldName] && formik.errors[fieldName] 
-      ? formik.errors[fieldName] 
+    return formik.touched[fieldName] && formik.errors[fieldName]
+      ? formik.errors[fieldName]
       : null;
   };
 
@@ -240,14 +246,20 @@ const ContactAnandSevaTrust = () => {
     <div className="min-h-screen bg-white">
       {/* HERO SECTION */}
       <section
-        className="relative py-16 overflow-hidden"
+        className="relative py-8 overflow-hidden"
         style={{ background: "linear-gradient(135deg, #1e3c72, #2a5298)" }}
       >
         {/* Hero Background Elements */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 left-0 w-96 h-96 bg-white/25 rounded-full mix-blend-overlay filter blur-3xl opacity-20 animate-pulse"></div>
-          <div className="absolute top-1/2 right-0 w-80 h-80 bg-white/30 rounded-full mix-blend-overlay filter blur-3xl opacity-25 animate-pulse" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute bottom-0 left-1/2 w-64 h-64 bg-white/40 rounded-full mix-blend-overlay filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
+          <div
+            className="absolute top-1/2 right-0 w-80 h-80 bg-white/30 rounded-full mix-blend-overlay filter blur-3xl opacity-25 animate-pulse"
+            style={{ animationDelay: "1s" }}
+          ></div>
+          <div
+            className="absolute bottom-0 left-1/2 w-64 h-64 bg-white/40 rounded-full mix-blend-overlay filter blur-3xl opacity-30 animate-pulse"
+            style={{ animationDelay: "2s" }}
+          ></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -270,19 +282,24 @@ const ContactAnandSevaTrust = () => {
                 Extending Care. Restoring Lives. Empowering Futures.
               </p>
               <p className="text-base md:text-lg text-white/80 mb-6 leading-relaxed">
-                A compassionate initiative dedicated to supporting individuals and families facing difficult circumstances.
+                A compassionate initiative dedicated to supporting individuals
+                and families facing difficult circumstances.
               </p>
             </motion.div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.a 
+              <motion.a
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                href="tel:+919876543210" 
+                href="tel:+919876543210"
                 className="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl text-base flex items-center justify-center gap-3 border border-orange-400"
               >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                <svg
+                  className="w-6 h-6"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
                 </svg>
                 Call for Help
               </motion.a>
@@ -293,7 +310,11 @@ const ContactAnandSevaTrust = () => {
                 href="https://wa.me/919876543210"
                 className="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl text-base flex items-center justify-center gap-3 border border-emerald-400"
               >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="w-6 h-6"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893c0-3.18-1.24-6.169-3.495-8.418" />
                 </svg>
                 WhatsApp Support
@@ -303,117 +324,57 @@ const ContactAnandSevaTrust = () => {
         </div>
       </section>
 
-      {/* MISSION SECTION */}
-      <section className="py-12 bg-gradient-to-b from-blue-50 to-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-6xl mx-auto text-center"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-8">Our Mission of Compassion</h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="bg-white p-6 rounded-xl shadow-lg border border-blue-200"
-              >
-                <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl text-white">👨‍👩‍👧‍👦</span>
-                </div>
-                <h3 className="text-xl font-bold text-blue-800 mb-3">Who We Support</h3>
-                <ul className="text-blue-700 text-left space-y-2 text-sm">
-                  <li>• Families without care or stability</li>
-                  <li>• Children from challenging backgrounds</li>
-                  <li>• Individuals at risk of negative influences</li>
-                  <li>• Those needing emotional healing</li>
-                </ul>
-              </motion.div>
-
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="bg-white p-6 rounded-xl shadow-lg border border-blue-200"
-              >
-                <div className="w-12 h-12 bg-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl text-white">📚</span>
-                </div>
-                <h3 className="text-xl font-bold text-blue-800 mb-3">Education & Learning</h3>
-                <ul className="text-blue-700 text-left space-y-2 text-sm">
-                  <li>• Quality education support</li>
-                  <li>• Academic guidance</li>
-                  <li>• Skill development programs</li>
-                  <li>• Value-based learning</li>
-                </ul>
-              </motion.div>
-
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="bg-white p-6 rounded-xl shadow-lg border border-blue-200"
-              >
-                <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl text-white">❤️</span>
-                </div>
-                <h3 className="text-xl font-bold text-blue-800 mb-3">Care & Protection</h3>
-                <ul className="text-blue-700 text-left space-y-2 text-sm">
-                  <li>• Safe supportive environment</li>
-                  <li>• Emotional counseling</li>
-                  <li>• Moral guidance</li>
-                  <li>• Life rebuilding support</li>
-                </ul>
-              </motion.div>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="bg-blue-800 text-white p-8 rounded-2xl shadow-xl"
-            >
-              <p className="text-lg md:text-xl italic mb-4">
-                "No child or family deserves to be left behind. Anand Seva Trust ensures they receive education, guidance, and the right direction to rise with hope and purpose."
-              </p>
-              <p className="text-blue-200 font-semibold">- Our Promise</p>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* FORM SECTION */}
-      <section ref={sectionRef} className="py-16 bg-gray-50">
+      <section ref={sectionRef} className="py-10 bg-gray-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial="hidden"
             animate={sectionInView ? "visible" : "hidden"}
             variants={{
               visible: {
-                transition: { staggerChildren: 0.06 }
-              }
+                transition: { staggerChildren: 0.06 },
+              },
             }}
             className="max-w-7xl mx-auto"
           >
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-
               {/* CONTACT INFO CARD */}
               <motion.div variants={fadeUp} className="lg:col-span-1 flex">
                 <div className="bg-white rounded-xl shadow-lg p-6 border border-blue-200 w-full flex flex-col">
                   <div className="flex-1">
-                    <h2 className="text-2xl font-bold text-blue-900 mb-4">Get Help & Support</h2>
+                    <h2 className="text-2xl font-bold text-blue-900 mb-4">
+                      Get Help & Support
+                    </h2>
                     <p className="text-blue-700 mb-6 text-sm leading-relaxed">
-                      If you or someone you know needs support, guidance, or assistance, we're here to help.
-                      Reach out to us confidentially.
+                      If you or someone you know needs support, guidance, or
+                      assistance, we're here to help. Reach out to us
+                      confidentially.
                     </p>
 
                     <div className="space-y-4 mb-6">
                       {contactMethods.map((method, index) => (
-                        <div key={index} className={`p-4 rounded-lg border ${method.borderColor} ${method.bgColor} transition-all duration-300 hover:shadow-sm`}>
+                        <div
+                          key={index}
+                          className={`p-4 rounded-lg border ${method.borderColor} ${method.bgColor} transition-all duration-300 hover:shadow-sm`}
+                        >
                           <div className="flex items-start space-x-3">
-                            <span className={method.iconColor}>{method.icon}</span>
+                            <span className={method.iconColor}>
+                              {method.icon}
+                            </span>
                             <div className="flex-1">
-                              <h3 className="font-semibold text-gray-800 text-sm">{method.title}</h3>
-                              <p className="text-gray-600 text-xs mb-2">{method.description}</p>
+                              <h3 className="font-semibold text-gray-800 text-sm">
+                                {method.title}
+                              </h3>
+                              <p className="text-gray-600 text-xs mb-2">
+                                {method.description}
+                              </p>
                               {method.details.map((detail, idx) => (
-                                <p key={idx} className="text-gray-700 font-medium text-sm">{detail}</p>
+                                <p
+                                  key={idx}
+                                  className="text-gray-700 font-medium text-sm"
+                                >
+                                  {detail}
+                                </p>
                               ))}
                             </div>
                           </div>
@@ -439,9 +400,13 @@ const ContactAnandSevaTrust = () => {
                   <div className="flex-1">
                     <div className="flex flex-col md:flex-row md:items-start justify-between mb-6">
                       <div className="mb-4 md:mb-0">
-                        <h2 className="text-2xl md:text-3xl font-bold text-blue-900 mb-2">Request Support</h2>
+                        <h2 className="text-2xl md:text-3xl font-bold text-blue-900 mb-2">
+                          Request Support
+                        </h2>
                         <p className="text-blue-700 text-sm md:text-base max-w-2xl">
-                          Share your situation with us confidentially. We'll connect you with the right support and guidance for your needs.
+                          Share your situation with us confidentially. We'll
+                          connect you with the right support and guidance for
+                          your needs.
                         </p>
                       </div>
                     </div>
@@ -454,13 +419,28 @@ const ContactAnandSevaTrust = () => {
                       >
                         <div className="flex items-center">
                           <div className="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center mr-3">
-                            <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                            <svg
+                              className="w-3 h-3 text-white"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={3}
+                                d="M5 13l4 4L19 7"
+                              />
                             </svg>
                           </div>
                           <div>
-                            <h4 className="font-semibold text-emerald-800 text-sm md:text-base">Support Request Sent!</h4>
-                            <p className="text-emerald-600 text-xs md:text-sm">We'll contact you shortly with guidance and support options.</p>
+                            <h4 className="font-semibold text-emerald-800 text-sm md:text-base">
+                              Support Request Sent!
+                            </h4>
+                            <p className="text-emerald-600 text-xs md:text-sm">
+                              We'll contact you shortly with guidance and
+                              support options.
+                            </p>
                           </div>
                         </div>
                       </motion.div>
@@ -468,7 +448,8 @@ const ContactAnandSevaTrust = () => {
 
                     {submitStatus === "error" && (
                       <div className="bg-rose-50 border border-rose-200 rounded-lg p-4 mb-3 text-rose-700 text-sm">
-                        Something went wrong. Please try again later or contact us directly.
+                        Something went wrong. Please try again later or contact
+                        us directly.
                       </div>
                     )}
 
@@ -478,7 +459,11 @@ const ContactAnandSevaTrust = () => {
                       </div>
                     )}
 
-                    <form onSubmit={formik.handleSubmit} className="space-y-6" noValidate>
+                    <form
+                      onSubmit={formik.handleSubmit}
+                      className="space-y-6"
+                      noValidate
+                    >
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                         <FormField
                           id="name"
@@ -540,7 +525,9 @@ const ContactAnandSevaTrust = () => {
                           >
                             <option value="">Select support type</option>
                             {inquiryTypes.map((type, idx) => (
-                              <option key={idx} value={type}>{type}</option>
+                              <option key={idx} value={type}>
+                                {type}
+                              </option>
                             ))}
                           </select>
                           {getFieldError("inquiryType") && (
@@ -587,10 +574,13 @@ const ContactAnandSevaTrust = () => {
                         />
                         <div className="flex justify-between items-center mt-2">
                           {getFieldError("message") ? (
-                            <p className="text-rose-600 text-sm">{getFieldError("message")}</p>
+                            <p className="text-rose-600 text-sm">
+                              {getFieldError("message")}
+                            </p>
                           ) : (
                             <p className="text-blue-600 text-xs md:text-sm">
-                              Please provide detailed information for better assistance
+                              Please provide detailed information for better
+                              assistance
                             </p>
                           )}
                           <p className="text-blue-400 text-xs md:text-sm">
@@ -611,7 +601,9 @@ const ContactAnandSevaTrust = () => {
                           onBlur={formik.handleBlur}
                         />
                         {getFieldError("website") && (
-                          <p className="text-rose-600">{getFieldError("website")}</p>
+                          <p className="text-rose-600">
+                            {getFieldError("website")}
+                          </p>
                         )}
                       </div>
 
@@ -642,6 +634,27 @@ const ContactAnandSevaTrust = () => {
           </motion.div>
         </div>
       </section>
+      {/* MISSION SECTION */}
+      <section className="pb-10 bg-gradient-to-b from-white-50 to-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto text-center">
+            {/* FIXED CARD – NO ANIMATION */}
+            <div
+              className="bg-blue-800 text-white p-8 rounded-2xl shadow-xl"
+              style={{
+                position: "relative", // fixed within its place
+              }}
+            >
+              <p className="text-lg md:text-xl italic mb-4">
+                "No child or family deserves to be left behind. Anand Seva Trust
+                ensures they receive education, guidance, and the right
+                direction to rise with hope and purpose."
+              </p>
+              <p className="text-blue-200 font-semibold">- Our Promise</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* SUCCESS MODAL */}
       {showModal && (
@@ -650,7 +663,10 @@ const ContactAnandSevaTrust = () => {
           animate={{ opacity: 1 }}
           className="fixed inset-0 z-50 flex items-center justify-center px-4"
         >
-          <div onClick={() => setShowModal(false)} className="absolute inset-0 bg-black/40" />
+          <div
+            onClick={() => setShowModal(false)}
+            className="absolute inset-0 bg-black/40"
+          />
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -658,12 +674,27 @@ const ContactAnandSevaTrust = () => {
           >
             <div className="text-center">
               <div className="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={3}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
               </div>
-              <h3 className="text-lg font-bold text-gray-800 mb-2">Help is on the way.</h3>
-              <p className="text-gray-600 text-sm mb-4">Our support team will contact you shortly with guidance and assistance.</p>
+              <h3 className="text-lg font-bold text-gray-800 mb-2">
+                Help is on the way.
+              </h3>
+              <p className="text-gray-600 text-sm mb-4">
+                Our support team will contact you shortly with guidance and
+                assistance.
+              </p>
               <button
                 onClick={() => setShowModal(false)}
                 className="px-4 py-2 rounded-lg bg-blue-500 text-white font-semibold text-sm hover:bg-blue-600 transition-colors"
@@ -681,24 +712,27 @@ const ContactAnandSevaTrust = () => {
 export default ContactAnandSevaTrust;
 
 /* ---------------- FORM FIELD COMPONENT ---------------- */
-function FormField({ 
-  id, 
-  label, 
-  name, 
-  type = "text", 
-  value, 
-  onChange, 
+function FormField({
+  id,
+  label,
+  name,
+  type = "text",
+  value,
+  onChange,
   onBlur,
-  placeholder, 
-  error, 
+  placeholder,
+  error,
   touched,
-  required 
+  required,
 }) {
   const hasError = touched && error;
-  
+
   return (
     <div>
-      <label htmlFor={id} className="block text-sm font-semibold text-blue-700 mb-2">
+      <label
+        htmlFor={id}
+        className="block text-sm font-semibold text-blue-700 mb-2"
+      >
         {label}
       </label>
       <input

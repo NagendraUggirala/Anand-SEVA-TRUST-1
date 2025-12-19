@@ -1,29 +1,29 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
- 
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [activeModal, setActiveModal] = useState(null);
- 
+
   const quickLinks = [
     { path: "/", label: "Home" },
     { path: "/about", label: "About" },
     { path: "/services", label: "Our Programs" },
-    { path: "/industries", label: "Donations" },
-    { path: "/blog", label: "Blog" },
+    // { path: "/industries", label: "Donations" },
+    // { path: "/blog", label: "Blog" },
     { path: "/contact", label: "Contact" }
   ];
- 
+
   const openLegalModal = (type) => {
     setActiveModal(type);
   };
- 
+
   const closeLegalModal = () => {
     setActiveModal(null);
   };
- 
+
   const SocialIcons = {};
- 
+
   const legalContent = {
     Privacy: {
       title: "Privacy Policy",
@@ -40,7 +40,7 @@ const Footer = () => {
               <li>Volunteer information and interests</li>
             </ul>
           </div>
- 
+
           <div>
             <h4 class="text-lg font-semibold text-green-800 mb-2">How We Use Your Information</h4>
             <ul class="list-disc list-inside space-y-1 text-gray-600">
@@ -50,7 +50,7 @@ const Footer = () => {
               <li>Improve our services and community outreach</li>
             </ul>
           </div>
- 
+
           <div>
             <h4 class="text-lg font-semibold text-green-800 mb-2">Data Protection</h4>
             <p class="text-gray-600">We implement security measures to protect your personal information and maintain confidentiality in all trust activities.</p>
@@ -73,7 +73,7 @@ const Footer = () => {
               <li>Transparency in fund utilization is maintained</li>
             </ul>
           </div>
- 
+
           <div>
             <h4 class="text-lg font-semibold text-green-800 mb-2">Volunteer Guidelines</h4>
             <ul class="list-disc list-inside space-y-1 text-gray-600">
@@ -83,7 +83,7 @@ const Footer = () => {
               <li>Background verification may be required for certain activities</li>
             </ul>
           </div>
- 
+
           <div>
             <h4 class="text-lg font-semibold text-green-800 mb-2">Legal Compliance</h4>
             <p class="text-gray-600">All trust activities are governed by applicable laws and regulations. We maintain proper documentation and transparency in all operations.</p>
@@ -104,12 +104,12 @@ const Footer = () => {
               <li>Check official communications for updates</li>
             </ul>
           </div>
- 
+
           <div>
             <h4 class="text-lg font-semibold text-green-800 mb-2">External Links</h4>
             <p class="text-gray-600">Our website may contain links to third-party sites. We are not responsible for the content or privacy practices of these external sites.</p>
           </div>
- 
+
           <div>
             <h4 class="text-lg font-semibold text-green-800 mb-2">Program Variations</h4>
             <p class="text-gray-600">Program schedules, activities, and beneficiary details may change based on community needs and resource availability.</p>
@@ -118,7 +118,7 @@ const Footer = () => {
       `
     }
   };
- 
+
   return (
     <>
       <footer
@@ -126,14 +126,14 @@ const Footer = () => {
         style={{ background: "linear-gradient(135deg, #1e3c72, #2a5298)" }}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
- 
+
           <div className="py-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6">
- 
+
               {/* Company Info */}
               <div className="lg:col-span-4 text-left">
                 <div className="flex items-start space-x-4 mb-6">
- 
+
                   <div className="flex items-center space-x-3 flex-shrink-0">
                     <div className="w-16 h-16 rounded-full border-2 border-white/30 overflow-hidden shadow-lg">
                       <img src="/images/image.png" alt="Founder" className="w-full h-full object-cover object-top" />
@@ -142,7 +142,7 @@ const Footer = () => {
                       <img src="/images/Anandhlogo.png" alt="Anand Seva Trust" className="w-full h-full object-contain" />
                     </div>
                   </div>
- 
+
                   {/* ★ UPDATED RESPONSIVE TITLE HERE ★ */}
                   <div className="flex flex-col">
                     <h4 className="text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg font-bold leading-tight">
@@ -154,33 +154,33 @@ const Footer = () => {
                     </p>
                   </div>
                 </div>
- 
+
                 <p className="text-gray-300 mb-4 text-sm leading-relaxed">
-                  A spiritual and social welfare trust devoted to serving humanity with compassion and devotion.
+                No child or family deserves to be left behind. Anand Seva Trust ensures they receive
+education, guidance, and the right direction to rise with hope and purpose.
                 </p>
- 
+
                 <p className="text-gray-300 text-sm leading-relaxed">
                   We work to provide support, guidance, and welfare services that enrich lives and strengthen communities.
                 </p>
               </div>
- <div className="lg:col-span-2 text-left">
-  <h3 className="text-lg font-semibold mb-3 text-white">Quick Links</h3>
 
-  {/* NO GAP – RESPONSIVE CLEAN LIST */}
-  <div className="flex flex-col">
-    {quickLinks.map((link, index) => (
-      <Link
-        key={index}
-        to={link.path}
-        className="text-gray-300 text-sm hover:text-white transition-all duration-200 leading-tight py-[2px]"
-      >
-        {link.label}
-      </Link>
-    ))}
-  </div>
-</div>
+              {/* Quick Links - Updated with proper spacing */}
+              <div className="lg:col-span-2 text-left">
+                <h3 className="text-lg font-semibold mb-4 text-white">Quick Links</h3>
+                <div className="flex flex-col space-y-3">
+                  {quickLinks.map((link, index) => (
+                    <Link
+                      key={index}
+                      to={link.path}
+                      className="text-gray-300 text-sm hover:text-white transition-all duration-200 hover:pl-2 hover:font-medium"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
 
- 
               {/* Contact */}
               <div className="lg:col-span-3 text-left">
                 <h3 className="text-lg font-semibold mb-4 text-white">Contact</h3>
@@ -193,19 +193,19 @@ const Footer = () => {
                       Telangana - 500034
                     </span>
                   </div>
- 
+
                   <div className="flex items-center space-x-3">
                     <i className="fas fa-phone text-white" />
                     <span className="text-gray-300">+91 1800 123 4857</span>
                   </div>
- 
+
                   <div className="flex items-center space-x-3">
                     <i className="fas fa-envelope text-white" />
                     <span className="text-gray-300">info@anandsevatrust.com</span>
                   </div>
                 </div>
               </div>
- 
+
               {/* Follow Us */}
               <div className="lg:col-span-3 text-left">
                 <h3 className="text-lg font-semibold mb-4 text-white">Follow Us</h3>
@@ -227,17 +227,17 @@ const Footer = () => {
                   </a>
                 </div>
               </div>
- 
+
             </div>
           </div>
- 
+
           {/* Bottom Footer */}
           <div className="border-t border-white/20 pt-6 pb-6">
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center space-y-4 lg:space-y-0">
               <p className="text-gray-300 text-sm">
                 © {currentYear} <span className="text-white font-semibold">Anand Seva Trust</span>. All rights reserved.
               </p>
- 
+
               <div className="flex gap-4">
                 {["Privacy", "Terms", "Disclaimer"].map((item) => (
                   <button
@@ -249,7 +249,7 @@ const Footer = () => {
                   </button>
                 ))}
               </div>
- 
+
               <p className="text-gray-300 text-sm">
                 Designed by{" "}
                 <Link to="https://designcareermetrics.com" className="text-white hover:underline font-medium">
@@ -258,10 +258,10 @@ const Footer = () => {
               </p>
             </div>
           </div>
- 
+
         </div>
       </footer>
- 
+
       {activeModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto">
@@ -277,12 +277,12 @@ const Footer = () => {
                   ×
                 </button>
               </div>
- 
+
               <div
                 className="prose prose-lg max-w-none"
                 dangerouslySetInnerHTML={{ __html: legalContent[activeModal]?.content }}
               />
- 
+
               <div className="flex justify-end mt-6">
                 <button
                   onClick={closeLegalModal}
@@ -298,5 +298,5 @@ const Footer = () => {
     </>
   );
 };
- 
+
 export default Footer;
