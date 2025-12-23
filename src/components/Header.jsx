@@ -46,9 +46,9 @@ const Header = () => {
             {/* Logo + Text */}
             <div className="flex items-center space-x-2">
               <img
-                src="./images/Anandhlogo.png"
+                src="./images/Anandhlogo.jpeg"
                 alt="Anand Logo"
-                className="w-8 h-10 md:w-10 md:h-12 object-contain"
+                className="w-10 h-10 md:w-12 md:h-12 object-contain"
               />
 
               <div>

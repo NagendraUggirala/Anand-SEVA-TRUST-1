@@ -135,17 +135,17 @@ const Footer = () => {
                 <div className="flex items-start space-x-4 mb-6">
 
                   <div className="flex items-center space-x-3 flex-shrink-0">
-                    <div className="w-16 h-16 rounded-full border-2 border-white/30 overflow-hidden shadow-lg">
+                    <div className="md:w-16 md:h-16 w-12 h-12 rounded-full border-2 border-white/30 overflow-hidden shadow-lg">
                       <img src="/images/image.png" alt="Founder" className="w-full h-full object-cover object-top" />
                     </div>
-                    <div className="w-14 h-14">
-                      <img src="/images/Anandhlogo.png" alt="Anand Seva Trust" className="w-full h-full object-contain" />
+                    <div className="md:w-16 md:h-16 w-12 h-12  rounded-full border-2 border-white/30 overflow-hidden shadow-lg">
+                      <img src="/images/Anandhlogo.jpeg" alt="Anand Seva Trust" className="w-full h-full object-contain" />
                     </div>
                   </div>
 
                   {/* ★ UPDATED RESPONSIVE TITLE HERE ★ */}
                   <div className="flex flex-col">
-                    <h4 className="text-[10px] sm:text-xs md:text-sm lg:text-base xl:text-lg font-bold leading-tight">
+                    <h4 className="text-[16px] sm:text-xs md:text-sm lg:text-base xl:text-lg font-bold leading-tight">
                       <span className="text-orange-500">ANAND</span>{" "}
                       <span className="text-white">SEVA TRUST</span>
                     </h4>
